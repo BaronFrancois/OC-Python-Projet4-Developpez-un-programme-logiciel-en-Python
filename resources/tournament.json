@@ -1,0 +1,39 @@
+{
+    "name": "tournament 1",
+    "location": "london",
+    "start_date": " 02/02/2000",
+    "end_date": "02/02/2000",
+    "number_of_rounds": 4,
+    "current_round": 0,
+    "rounds": [],
+    "registered_players": [
+        {
+            "national_chess_id": "EN67890",
+            "last_name": "Smith",
+            "first_name": "Jane",
+            "date_of_birth": "1988-11-20"
+        },
+        {
+            "first_name": "Pierre",
+            "last_name": "Dupont",
+            "date_of_birth": "1985-03-08",
+            "national_chess_id": "FR12345"
+        },
+        {
+            "first_name": "Taro",
+            "last_name": "Yamada",
+            "date_of_birth": "1992-07-10",
+            "national_chess_id": "JP12345"
+        },
+        {
+            "first_name": "Yuki",
+            "last_name": "Tanaka",
+            "date_of_birth": "1994-04-22",
+            "national_chess_id": "JP67890"
+        }
+        
+
+
+    ],
+    "description": " tournament description"
+}

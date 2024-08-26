@@ -1,3 +1,5 @@
+
+
 class Player:
     def __init__(self, last_name, first_name, date_of_birth,national_chess_id, plyr_score = 0):
         self.last_name = last_name
@@ -6,4 +8,4 @@ class Player:
         self.national_chess_id = national_chess_id
         self.plyr_score = plyr_score
     
-
+   

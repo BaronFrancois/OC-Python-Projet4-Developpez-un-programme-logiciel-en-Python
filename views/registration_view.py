@@ -1,9 +1,9 @@
 import re
-import os
-import json
-# create a function
 
-def register_player ():
+def register_player_view ():
+    
+    country = input("enter your federation's country name here:")
+    club_name = input("enter your federation's club name here:")
 # get chess ID
     while True:
         chess_id = input("enter your National Chess ID:")
@@ -18,24 +18,15 @@ def register_player ():
     # get remaining details
     last_name = input("enter your last name here :")
     first_name = input("enter your first name here :")
-    birtday = input("enter your birthday's date here :")
+    birthday = input("enter your birthday's date here :")
 
-    player = {"chess_id":chess_id,
-              "last_name": last_name,
-              "first_name":first_name,
-              "birthday": birtday
-              }
+   
+    return (chess_id, last_name, first_name, birthday, country, club_name)
 
-    if os.path.exists("resources/players.json"):
-        with open("resources/players.json","r") as file:
-            players = json.load(file)
-            print(players)
-        players.append(player)
-        with open("resources/players.json","w") as file :
-            json.dump(players,file,indent=4)
-            print("New player saved succesfully !")
-    else :
-        with open("resources/players.json","w") as file :
-            json.dump([player],file,indent=4)
-            print("succesfull file creation")
-    print("registration succefull")
+def create_tournament_view ():
+    tmt_name = input("enter the tournament name")
+    tmt_location = input("enter the tournament location")
+    tmt_start_date = input("enter the tournament start date")
+    tmt_end_date = input("enter the tournament end date")
+    tmt_description = input("enter the tournament description")
+    return (tmt_name,tmt_location,tmt_start_date, tmt_end_date,tmt_description)
