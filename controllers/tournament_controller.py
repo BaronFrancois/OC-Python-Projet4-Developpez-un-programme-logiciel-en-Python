@@ -8,8 +8,8 @@ class TournamentController:
     def __init__ (self):
         self.tournament = None
 
-    def load_tournament_data (self):
-        self.tournament = Tournament(None,None,None,None,None)
+    def load_tournament_data (self, name):
+        self.tournament = Tournament(name,None,None,None,None)
         is_data_loaded = self.tournament.load_data()
         if not is_data_loaded :
             self.tournament = None
@@ -28,3 +28,7 @@ class TournamentController:
     def start_tournament(self):
         self.tournament.set_total_nbr_rounds()
         self.tournament.generate_round()
+        self.tournament.start_round()
+
+    def see_all_players(self):
+        pass

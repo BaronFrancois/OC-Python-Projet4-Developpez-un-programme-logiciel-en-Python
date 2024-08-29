@@ -1,0 +1,18 @@
+{
+    "name": "Tournament1",
+    "location": "Paris",
+    "start_date": "28/08/2024",
+    "end_date": "28/08/2024",
+    "number_of_rounds": 4,
+    "current_round": 0,
+    "rounds": [],
+    "registered_players": [
+        {
+            "national_chess_id": "JP12345",
+            "last_name": "Yamada",
+            "first_name": "Taro",
+            "date_of_birth": "1992-07-10"
+        }
+    ],
+    "description": "Test for creation of a new tournament json file"
+}

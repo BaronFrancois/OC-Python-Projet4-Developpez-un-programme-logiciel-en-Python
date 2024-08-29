@@ -1,4 +1,5 @@
 import re
+import json
 
 def register_player_view ():
     
@@ -30,3 +31,11 @@ def create_tournament_view ():
     tmt_end_date = input("enter the tournament end date")
     tmt_description = input("enter the tournament description")
     return (tmt_name,tmt_location,tmt_start_date, tmt_end_date,tmt_description)
+
+def get_players():
+    with open("resources/club.json","r") as file :
+        details = json.load(file)
+        first_name = details["first_name"]
+        last_name = details["last_name"]
+        date_of_birth = details["date_of_birth"]
+        national_chess_id = details["national_chess_id"]

@@ -12,7 +12,7 @@ class Round:
     def set_matches (self,players, current_round_number):
         if current_round_number == 1 :
             random.shuffle(players)
-            for p in range (0,len(players),2):
+            for p in range (0,len(players)-1,2):
                 player1 = players[p]
                 player2 = players[p+1]
                 current_match = Match(player1,player2)
@@ -20,3 +20,8 @@ class Round:
             
         else:
             pass
+    
+    def start_matches(self):
+        for match in self.rnd_matches:
+            match.play()
+        

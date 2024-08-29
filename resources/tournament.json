@@ -1,17 +1,23 @@
 {
-    "name": "tournament 1",
+    "name": "London chess test",
     "location": "london",
-    "start_date": " 02/02/2000",
-    "end_date": "02/02/2000",
+    "start_date": "28/08/2024",
+    "end_date": "28/08/2024",
     "number_of_rounds": 4,
     "current_round": 0,
     "rounds": [],
     "registered_players": [
         {
-            "national_chess_id": "EN67890",
-            "last_name": "Smith",
+            "national_chess_id": "EN12345",
+            "last_name": "Doe",
+            "first_name": "John",
+            "date_of_birth": "1990-05-14"
+        },
+        {
             "first_name": "Jane",
-            "date_of_birth": "1988-11-20"
+            "last_name": "Smith",
+            "date_of_birth": "1988-11-20",
+            "national_chess_id": "EN67890"
         },
         {
             "first_name": "Pierre",
@@ -24,16 +30,7 @@
             "last_name": "Yamada",
             "date_of_birth": "1992-07-10",
             "national_chess_id": "JP12345"
-        },
-        {
-            "first_name": "Yuki",
-            "last_name": "Tanaka",
-            "date_of_birth": "1994-04-22",
-            "national_chess_id": "JP67890"
         }
-        
-
-
     ],
-    "description": " tournament description"
+    "description": "this is a test"
 }
