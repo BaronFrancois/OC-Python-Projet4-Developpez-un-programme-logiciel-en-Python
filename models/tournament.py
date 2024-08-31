@@ -18,6 +18,10 @@ class Tournament:
         self.description = description
         self.number_of_rounds = number_of_rounds
 
+    def __str__(self):
+        details = f"name:{self.name}, start_date:{self.start_date}, end_date:{self.end_date}"
+        return details
+
     def save_tournament_details(self):
         details = {
             "name": self.name,
@@ -30,13 +34,13 @@ class Tournament:
             "registered_players": self.registered_players,
             "description":self.description
         }
-        with open(f"resources/{self.name}.json","w") as file :
+        with open(f"resources/tournaments/{self.name}.json","w") as file :
                json.dump(details,file,indent=4)
                print("New tournament saved succesfully !")
 
     def load_data(self):
-        if os.path.exists(f"resources/{self.name}.json"):
-            with open(f"resources/{self.name}.json","r") as file :
+        if os.path.exists(f"resources/tournaments/{self.name}.json"):
+            with open(f"resources/tournaments/{self.name}.json","r") as file :
                details = json.load(file)
                self.name = details["name"]
                self.location = details["location"]
@@ -82,11 +86,11 @@ class Tournament:
                 "date_of_birth": new_player.date_of_birth
                 }
        
-        with open(f"resources/{self.name}.json","r") as file:
+        with open(f"resources/tournaments/{self.name}.json","r") as file:
             tournament = json.load(file)
             # print(tournament)
         tournament["registered_players"].append(player)
-        with open(f"resources/{self.name}.json","w") as file :
+        with open(f"resources/tournaments/{self.name}.json","w") as file :
             json.dump(tournament,file,indent=4)
             print("New player saved succesfully !")
 
@@ -108,4 +112,4 @@ class Tournament:
 
     def calculate_score (self):
         pass
-# We need to add tournaments into json format (multiple tournaments at the same time)
+

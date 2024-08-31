@@ -1,5 +1,8 @@
 from views.registration_view import *
 from models.tournament import Tournament
+import json
+import glob
+import os
 
 
 
@@ -31,4 +34,30 @@ class TournamentController:
         self.tournament.start_round()
 
     def see_all_players(self):
-        pass
+         with open('resources/clubs.json', 'r') as file:
+                data = json.load(file)
+                all_players = {}
+                for federation in data["federations"]:
+                    for club in federation["clubs"]:
+                        for player in club["players"]:
+                            key = f"{player['last_name']} {player['first_name']}"
+                            value = f"{player['national_chess_id']}"
+                            all_players[key] = value
+                all_players = dict(sorted(all_players.items())) 
+
+                show_all_players(all_players)
+
+    def see_all_tournaments(self):
+        path = os.path.join("resources/tournaments","*.json")
+        file_names = glob.glob(path)
+        # print(file_names)
+        tournaments = []
+        for file_name in file_names :
+            with open(file_name) as file :
+                data = json.load(file)
+                tournaments.append(data)
+        show_all_tournaments(tournaments)
+
+    def search_tournament(self):
+        print(self.tournament)
+        

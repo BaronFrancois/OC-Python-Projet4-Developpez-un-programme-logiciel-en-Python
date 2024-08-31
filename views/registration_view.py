@@ -1,5 +1,4 @@
 import re
-import json
 
 def register_player_view ():
     
@@ -25,17 +24,20 @@ def register_player_view ():
     return (chess_id, last_name, first_name, birthday, country, club_name)
 
 def create_tournament_view ():
-    tmt_name = input("enter the tournament name")
-    tmt_location = input("enter the tournament location")
-    tmt_start_date = input("enter the tournament start date")
-    tmt_end_date = input("enter the tournament end date")
-    tmt_description = input("enter the tournament description")
+    tmt_name = input("enter the tournament name:")
+    tmt_location = input("enter the tournament location:")
+    tmt_start_date = input("enter the tournament start date:")
+    tmt_end_date = input("enter the tournament end date:")
+    tmt_description = input("enter the tournament description:")
     return (tmt_name,tmt_location,tmt_start_date, tmt_end_date,tmt_description)
 
-def get_players():
-    with open("resources/club.json","r") as file :
-        details = json.load(file)
-        first_name = details["first_name"]
-        last_name = details["last_name"]
-        date_of_birth = details["date_of_birth"]
-        national_chess_id = details["national_chess_id"]
+def show_all_players(players):
+     for name, chess_id in players.items():
+        print(f"Name: {name},\t\tChess ID: {chess_id}")
+
+def show_all_tournaments(tournaments):
+    for tournament in tournaments:
+        print(f"name:{tournament["name"]}, location :{tournament["location"]}, start_date:{tournament["start_date"]}, end_date:{tournament["end_date"]}")
+
+
+    
