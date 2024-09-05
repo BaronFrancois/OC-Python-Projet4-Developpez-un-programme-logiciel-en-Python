@@ -27,6 +27,7 @@ while True:
         print("the tournament has been created")
     elif user_input == 2:
         tournament_manager.see_all_players()
+
     elif user_input == 3:
         tournament_manager.see_all_tournaments()
 
@@ -47,10 +48,10 @@ while True:
 # show_tournament_players (controler),list regisetred players/ use a loop to get player.first_name/last_name/chess_id
 # create dict and send in show all players (re-use function), sort all players.
     elif user_input == 7:
-        pass
+        tournament_manager.show_tournament_players()
 
     elif user_input == 8:
-        pass
+        tournament_manager.show_tournament_report()
 
     elif user_input == 9:
         print("thank you for using the application:")

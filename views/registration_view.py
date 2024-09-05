@@ -39,5 +39,7 @@ def show_all_tournaments(tournaments):
     for tournament in tournaments:
         print(f"name:{tournament["name"]}, location :{tournament["location"]}, start_date:{tournament["start_date"]}, end_date:{tournament["end_date"]}")
 
+def show_tournament_round(round_name, start_date_time, end_date_time):
+    print(f"round name:{round_name}, start date time:{start_date_time}, end date time:{end_date_time}")
 
     

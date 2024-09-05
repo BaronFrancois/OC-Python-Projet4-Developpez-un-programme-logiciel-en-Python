@@ -7,8 +7,14 @@ class Match:
         self.player2 = player2
     
     def play(self):
-        self.player1.plyr_score = random.choice([1,0,0.5])
-        self.player2.plyr_score = 1-self.player1.plyr_score
+        score1 = random.choice([0,0.5,1])
+        score2 = 1-score1 
+        if score1 == 0:
+            self.player1.has_lost = True
+        elif score2 == 0:
+            self.player2.has_lost = True
+        self.player1.plyr_score += score1
+        self.player2.plyr_score += score2
     # def set_scores(self, score1, score2):
     #         self.score1 = score1
     #         self.score2 = score2

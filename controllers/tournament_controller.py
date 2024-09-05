@@ -30,8 +30,11 @@ class TournamentController:
 
     def start_tournament(self):
         self.tournament.set_total_nbr_rounds()
-        self.tournament.generate_round()
-        self.tournament.start_round()
+        for round in range(self.tournament.number_of_rounds):
+            self.tournament.generate_round()
+            self.tournament.start_round()
+        self.tournament.add_rounds_to_file()
+            
 
     def see_all_players(self):
          with open('resources/clubs.json', 'r') as file:
@@ -60,4 +63,21 @@ class TournamentController:
 
     def search_tournament(self):
         print(self.tournament)
-        
+
+    def show_tournament_players(self):
+        players = self.tournament.registered_players
+        all_players = {}
+        # print(players)
+        for player in players :
+            key = f"{player.last_name} {player.first_name}"
+            value = f"{player.national_chess_id}"
+            all_players[key] = value
+        all_players = dict(sorted(all_players.items()))
+        show_all_players(all_players)
+
+    def show_tournament_report(self):
+        for round in self.tournament.rounds:
+            show_tournament_round(round.rnd_name,round.rnd_start_datetime,round.rnd_end_datetime)
+            
+
+    

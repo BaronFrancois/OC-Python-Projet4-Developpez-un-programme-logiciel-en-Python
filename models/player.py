@@ -7,5 +7,6 @@ class Player:
         self.date_of_birth = date_of_birth
         self.national_chess_id = national_chess_id
         self.plyr_score = plyr_score
+        self.has_lost = False
     
    
