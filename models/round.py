@@ -3,11 +3,11 @@ from models.match import Match
 
 
 class Round:
-    def __init__ (self, rnd_name, rnd_start_datetime, rnd_end_datetime=None ):
+    def __init__ (self, rnd_name, rnd_start_datetime, rnd_end_datetime=None,rnd_matches= [] ):
         self.rnd_name = rnd_name
         self.rnd_start_datetime = rnd_start_datetime
         self.rnd_end_datetime = rnd_end_datetime
-        self.rnd_matches = []
+        self.rnd_matches = rnd_matches
 
     def set_matches (self,players, current_round_number):
         if current_round_number == 1 :
