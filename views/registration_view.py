@@ -49,3 +49,11 @@ def show_tournament_round(round_name, start_date_time, end_date_time):
         f"round name:{round_name}, start date time:{start_date_time}, end date time:{end_date_time}"
     )
 # check all of the options main menu's, the files, start the tournament, check details
+def show_round_matches(player1, player2):
+    print("player 1 vs player 2")
+    print(f"name {player1.last_name} {player1.first_name}, {player2.last_name} {player2.first_name}" )
+    print(f"NCID {player1.national_chess_id}, {player2.national_chess_id}")
+    print(f"DOB {player1.date_of_birth},  {player2.date_of_birth}")
+    print(f"scores {player1.plyr_score}, {player2.plyr_score}")
+    print(f"winner {not player1.has_lost}, {not player2.has_lost}")
+    print("---------------------------")

@@ -163,7 +163,9 @@ class Tournament:
         current_round = Round(round_name, start_date_time)
         current_round.set_matches(self.registered_players, self.current_round_number)
         self.rounds.append(current_round)
-
+# ----- 10/09/2024 first generate and then (round end time =/= None)
+# check plyr_score first match within the round
+# sum(score_plyr1 + score_plyr2) == 1
     def start_round(self):
         self.rounds[self.current_round_number - 1].start_matches()
         self.rounds[

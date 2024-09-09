@@ -83,3 +83,5 @@ class TournamentController:
             show_tournament_round(
                 round.rnd_name, round.rnd_start_datetime, round.rnd_end_datetime
             )
+            for match in round.rnd_matches:
+                show_round_matches(match.player1, match.player2)
