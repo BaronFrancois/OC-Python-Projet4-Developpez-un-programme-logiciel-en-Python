@@ -40,30 +40,3 @@ class Round:
         for match in self.rnd_matches:
             match.play()
             print(match.player1.first_name,match.player1.plyr_score, "///VS///" ,match.player2.first_name,match.player2.plyr_score)
-# # [
-#     {'Round Name':'Round1',
-#     'start': '09/09/09',
-#     'end': '10/09/09',
-#     'matches':
-#             [
-#                 [   {
-#                     "last_name": "joe",
-#                     "first_name": "doe"
-#                     },
-#                     {
-#                     "last_name": "bob",
-#                     "first_name": "doe"
-#                     }
-#                 ],
-#                 [   {
-#                     "last_name": "smith",
-#                     "first_name": "doe"
-#                     },
-#                     {
-#                     "last_name": "lucas",
-#                     "first_name": "doe"
-#                     }
-#                 ]
-#             ]
-#     }
-# ]
