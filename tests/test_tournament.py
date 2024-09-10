@@ -174,14 +174,11 @@ def test_start_round():
 
     tournament.set_total_nbr_rounds()
     tournament.generate_round()
+    tournament.start_round()
 
     round = tournament.rounds[0]
 
-    round.rnd_end_datetime = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-
-    assert round.rnd_end_datetime is not None
-
-    round.start_matches()
+    assert round.rnd_end_datetime
 
     match = round.rnd_matches[0]
 
@@ -191,19 +188,25 @@ def test_start_round():
     total_score = player1.plyr_score + player2.plyr_score
     assert total_score == 1
 
-
-
-def test_start_tournament():
-    
+def test_add_rounds_to_file():
     tournament = Tournament(
         "Test Tournament", "Paris", "01/01/2024", "02/01/2024", "Test Tournament Description", 4
     )
 
-    
+    tournament.register_player("EN12345", "Doe", "John", "1990-05-14", "Europe", "London Chess Club")
+    tournament.register_player("EN67890", "Jane", "Smith", "1988-11-20", "Europe", "London Chess Club")
+    tournament.register_player("FR12345", "Pierre", "Dupont", "1985-03-08", "Europe", "Paris Chess Club")
+    tournament.register_player("JP12345", "Taro", "Yamada", "1992-07-10", "Asia", "Tokyo Chess Club")
+
     tournament.set_total_nbr_rounds()
     tournament.generate_round()
+    tournament.start_round()
+    tournament.add_rounds_to_file()
 
+    loaded_tournament = Tournament("Test Tournament", None, None, None, None)
+    loaded_tournament.load_data()
+    assert len(loaded_tournament.rounds) == 1
+    assert len(loaded_tournament.rounds[0].rnd_matches) == 2
     
-    assert len(tournament.rounds) == 1
-    assert tournament.current_round_number == 1
+
 
