@@ -6,6 +6,32 @@
     "number_of_rounds": 4,
     "current_round": 0,
     "rounds": [],
-    "registered_players": [],
+    "registered_players": [
+        {
+            "national_chess_id": "EN12345",
+            "last_name": "Doe",
+            "first_name": "John",
+            "date_of_birth": "1990-05-14"
+        },
+        {
+            "national_chess_id": "EN67890",
+            "last_name": "Smith",
+            "first_name": "Jane",
+            "date_of_birth": "1988-11-20"
+        },
+        {
+            "national_chess_id": "FR12345",
+            "last_name": "Dupont",
+            "first_name": "Pierre",
+            "date_of_birth": "1985-03-08"
+        },
+        
+        {
+            "national_chess_id": "FR12345",
+            "last_name": "Dupont",
+            "first_name": "Pierre",
+            "date_of_birth": "1985-03-08"
+        }
+    ],
     "description": "test json file"
 }

@@ -1,28 +1,68 @@
 import re
 
 
-def register_player_view():
-    country = input("enter your federation's country name here:")
-    club_name = input("enter your federation's club name here:")
-    # get chess ID
-    while True:
-        chess_id = input("enter your National Chess ID:")
-        is_valid = re.match("[A-Z]{2}[0-9]{5}", chess_id)
-        if len(chess_id) == 7 and is_valid:
-            print("Chess Id is valid")
-            break
-
+def register_player_view(details = None):
+    if details:
+        country = details["country"]
+        club_name =details["club_name"]
+        chess_id = details["chess_id"]
+        last_name = details["last_name"]
+        first_name = details["first_name"]
+        birthday = details["birthday"]
+    else:    
+    # Add exit condition to all, if user exits -> print a message
+        country = club_name = chess_id = last_name = first_name =   birthday = None
+    if not country:
+        country = input("Enter your federation's country name here (or press '0' to quit): ")
+    else:
+        print(f"Enter your federation's country name here (or press '0' to quit):{country} ")
+    if country and country != '0':
+        print(f"Country: {country}")
+        if not club_name:
+            club_name = input("Enter your federation's club name here (or press '0' to quit): ")
         else:
-            print("please enter a valide national chess Id:")
+            print(f"Enter your federation's club name here (or press '0' to quit):{club_name} ")
+    if club_name and club_name != '0':
+        print(f"Club name: {club_name}")
 
-    # get remaining details
-    last_name = input("enter your last name here :")
-    first_name = input("enter your first name here :")
-    birthday = input("enter your birthday's date here :")
+        while True:
+            if not chess_id:
+                chess_id = input("Enter your National Chess ID (or press '0' to quit): ")
+            else:
+                print(f"Enter your National Chess ID (or press '0' to quit):{chess_id}")
+            if chess_id == '0':
+                break
 
+            is_valid = re.match(r"[A-Z]{2}[0-9]{5}", chess_id)
+            if len(chess_id) == 7 and is_valid:
+                print("Chess ID is valid")
+                break
+            else:
+                print("Please enter a valid National Chess ID (2 uppercase letters followed by 5 digits).")
+
+    if chess_id and chess_id != '0':
+        if not last_name:
+            last_name = input("enter your last name here (or press '0' to quit):")
+        else:
+            print("enter your last name here (or press '0' to quit):{last_name}")
+            
+    if last_name and last_name != '0':
+        if not first_name:
+            first_name = input("enter your first name here (or press '0' to quit):")
+        else:
+            print("enter your first name here (or press '0' to quit):{first_name}")
+    if first_name and first_name != '0':
+        if not birthday:
+            birthday = input("enter your birthday's date here (or press '0' to quit):")  
+        else: 
+            print("enter your birthday's date here (or press '0' to quit):{birthday}")    
+    if country == '0' or club_name == '0' or chess_id == '0' or first_name == '0' or last_name == '0' or birthday == '0':
+        print("Registration process exited.")
+    else:
+        print("application closed")
     return (chess_id, last_name, first_name, birthday, country, club_name)
 
-
+# implement when press 0, stop the code
 def create_tournament_view():
     tmt_name = input("enter the tournament name:")
     tmt_location = input("enter the tournament location:")

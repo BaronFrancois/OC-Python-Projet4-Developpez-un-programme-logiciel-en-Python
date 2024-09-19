@@ -24,13 +24,30 @@ class TournamentController:
         )
         self.tournament.save_tournament_details()
 
-    def register_player(self):
+    def register_player(self, details= None):
+        
         chess_id, last_name, first_name, birthday, country, club_name = (
-            register_player_view()
+            register_player_view(details)
         )
-        self.tournament.register_player(
-            chess_id, last_name, first_name, birthday, country, club_name
-        )
+        if country == '0' or club_name == '0' or chess_id == '0' or first_name == '0' or last_name == '0' or birthday == '0':
+            print("Registration process exited tournament controller part.")
+            data = {"option_number":4,
+                    "tournament":self.tournament.name,
+                    "country":country,
+                    "club_name": club_name,
+                    "chess_id": chess_id,
+                    "last_name": last_name,
+                    "first_name": first_name,
+                    "birthday":birthday}
+            with open("resources/resume_file.json","w") as file:
+                json.dump(data,file,indent=4)
+            return False
+        else:
+            print("application closed tournament controller part")
+            self.tournament.register_player(
+                chess_id, last_name, first_name, birthday, country, club_name
+            )
+            return True
 
     def start_tournament(self):
         self.tournament.set_total_nbr_rounds()
@@ -85,3 +102,7 @@ class TournamentController:
             )
             for match in round.rnd_matches:
                 show_round_matches(match.player1, match.player2)
+                
+    
+        
+            
