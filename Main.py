@@ -35,8 +35,11 @@ while True:
             tournament_manager.load_tournament_data(tournament_name)
             # create the exit and save
         if user_input == 1:
-            tournament_manager.create_tournament()
-            print("the tournament has been created")
+            succes = tournament_manager.create_tournament()            
+            if not succes:
+                break
+            else:
+                print("the tournament has been created")
         elif user_input == 2:
             tournament_manager.see_all_players()
 
@@ -71,16 +74,20 @@ while True:
         else :
             print("please select a valid option:")
 
-
-    else:
+# if resume file is present
+    else: 
         user_input = details["option_number"]
         if user_input in [4,5,6,7,8]:
             tournament_name = details["tournament"]
             tournament_manager.load_tournament_data(tournament_name)
 
         if user_input == 1:
-            tournament_manager.create_tournament()
-            print("the tournament has been created")
+            succes = tournament_manager.create_tournament(details)            
+            if not succes:
+                break
+            else:
+                print("the tournament has been created")
+                
         elif user_input == 2:
             tournament_manager.see_all_players()
 

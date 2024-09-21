@@ -15,14 +15,27 @@ class TournamentController:
         if not is_data_loaded:
             self.tournament = None
 
-    def create_tournament(self):
+    def create_tournament(self, details = None):
         tmt_name, tmt_location, tmt_start_date, tmt_end_date, tmt_description = (
-            create_tournament_view()
+            create_tournament_view(details)
         )
-        self.tournament = Tournament(
-            tmt_name, tmt_location, tmt_start_date, tmt_end_date, tmt_description
-        )
-        self.tournament.save_tournament_details()
+        if tmt_name == '0' or tmt_location == '0' or tmt_start_date == '0' or tmt_end_date == '0' or tmt_description == '0':
+            data = {"option_number":1,
+                    "tmt_name":tmt_name,
+                    "tmt_location":tmt_location,
+                    "tmt_start_date": tmt_start_date,
+                    "tmt_end_date": tmt_end_date,
+                    "tmt_description": tmt_description
+                    }
+            with open("resources/resume_file.json","w") as file:
+                json.dump(data,file,indent=4)
+            return False
+        else:
+            self.tournament = Tournament(
+                tmt_name, tmt_location, tmt_start_date, tmt_end_date, tmt_description
+            )
+            self.tournament.save_tournament_details()
+            return True
 
     def register_player(self, details= None):
         

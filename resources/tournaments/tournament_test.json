@@ -1,0 +1,11 @@
+{
+    "name": "tournament_test",
+    "location": "france",
+    "start_date": "21/09/2024",
+    "end_date": "21/09/2024",
+    "number_of_rounds": 4,
+    "current_round": 0,
+    "rounds": [],
+    "registered_players": [],
+    "description": "testing the create tournament function"
+}

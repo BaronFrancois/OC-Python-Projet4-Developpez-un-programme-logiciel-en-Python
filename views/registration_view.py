@@ -63,13 +63,77 @@ def register_player_view(details = None):
     return (chess_id, last_name, first_name, birthday, country, club_name)
 
 # implement when press 0, stop the code
-def create_tournament_view():
-    tmt_name = input("enter the tournament name:")
-    tmt_location = input("enter the tournament location:")
-    tmt_start_date = input("enter the tournament start date:")
-    tmt_end_date = input("enter the tournament end date:")
-    tmt_description = input("enter the tournament description:")
+def create_tournament_view(details = None):
+    # tmt_name = input("enter the tournament name:")
+    # tmt_location = input("enter the tournament location:")
+    # tmt_start_date = input("enter the tournament start date:")
+    # tmt_end_date = input("enter the tournament end date:")
+    # tmt_description = input("enter the tournament description:")
+    # return (tmt_name, tmt_location, tmt_start_date, tmt_end_date, tmt_description)
+    if details:
+        tmt_name = details["tmt_name"]
+        tmt_location = details["tmt_location"]
+        tmt_start_date = details["tmt_start_date"]
+        tmt_end_date = details["tmt_end_date"]
+        tmt_description = details["tmt_description"] 
+    else:
+        tmt_name = tmt_location = tmt_start_date = tmt_end_date = tmt_description = None
+        
+    if not tmt_name:
+        tmt_name = input("Enter the tournament name (or press '0' to quit): ")
+    else:
+        print(f"Enter the tournament name (or press '0' to quit): {tmt_name}")
+    
+    if tmt_name and tmt_name != '0':
+        print(f"Tournament Name: {tmt_name}")
+
+        
+        if not tmt_location:
+            tmt_location = input("Enter the tournament location (or press '0' to quit): ")
+        else:
+            print(f"Enter the tournament location (or press '0' to quit): {tmt_location}")
+
+        if tmt_location and tmt_location != '0':
+            print(f"Tournament Location: {tmt_location}")
+
+            
+            if not tmt_start_date:
+                tmt_start_date = input("Enter the tournament start date (or press '0' to quit): ")
+            else:
+                print(f"Enter the tournament start date (or press '0' to quit): {tmt_start_date}")
+
+            if tmt_start_date and tmt_start_date != '0':
+                print(f"Tournament Start Date: {tmt_start_date}")
+
+                
+                if not tmt_end_date:
+                    tmt_end_date = input("Enter the tournament end date (or press '0' to quit): ")
+                else:
+                    print(f"Enter the tournament end date (or press '0' to quit): {tmt_end_date}")
+
+                if tmt_end_date and tmt_end_date != '0':
+                    print(f"Tournament End Date: {tmt_end_date}")
+
+                    
+                    if not tmt_description:
+                        tmt_description = input("Enter the tournament description (or press '0' to quit): ")
+                    else:
+                        print(f"Enter the tournament description (or press '0' to quit): {tmt_description}")
+
+                    if tmt_description and tmt_description != '0':
+                        print(f"Tournament Description: {tmt_description}")
+
+    
+    if tmt_name == '0' or tmt_location == '0' or tmt_start_date == '0' or tmt_end_date == '0' or tmt_description == '0':
+        print("Tournament creation process exited.")
+    else:
+        print("Tournament created successfully.")
+    
     return (tmt_name, tmt_location, tmt_start_date, tmt_end_date, tmt_description)
+
+    
+    
+
 
 
 def show_all_players(players):
