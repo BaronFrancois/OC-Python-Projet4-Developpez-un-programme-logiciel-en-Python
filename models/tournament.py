@@ -21,6 +21,7 @@ class Tournament:
         self.registered_players = []
         self.description = description
         self.number_of_rounds = number_of_rounds
+        self.current_players = []
 
     def __str__(self):
         details = (
@@ -157,12 +158,17 @@ class Tournament:
 
     def generate_round(self):
         self.current_round_number += 1
+        if self.current_round_number == 1:
+            self.current_players = self.registered_players
         round_name = "Round " + str(self.current_round_number)
         print(round_name)
         start_date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         current_round = Round(round_name, start_date_time)
-        current_round.set_matches(self.registered_players, self.current_round_number)
+        current_round.set_matches(self.current_players, self.current_round_number)
         self.rounds.append(current_round)
+        
+    
+        
 # ----- 10/09/2024 first generate and then (round end time =/= None)
 # check plyr_score first match within the round
 # sum(score_plyr1 + score_plyr2) == 1
@@ -171,7 +177,9 @@ class Tournament:
         self.rounds[
             self.current_round_number - 1
         ].rnd_end_datetime = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-
+        self.current_players = self.rounds[self.current_round_number - 1].check_round_winners()
+        return len(self.current_players)
+        
     def add_rounds_to_file(self):
         with open(f"resources/tournaments/{self.name}.json", "r") as file:
             tournament = json.load(file)

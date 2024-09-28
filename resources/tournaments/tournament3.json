@@ -1,40 +1,22 @@
 {
-    "name": "tournament2",
+    "name": "tournament3",
     "location": "paris",
-    "start_date": "28/08/2024",
-    "end_date": "28/08/2024",
+    "start_date": "28/09/2024",
+    "end_date": "28/09/2024",
     "number_of_rounds": 4,
     "current_round": 0,
     "rounds": [
         {
             "rnd_name": "Round 1",
-            "rnd_start_datetime": "09/21/2024, 14:34:47",
-            "rnd_end_datetime": "09/21/2024, 14:34:47",
+            "rnd_start_datetime": "09/28/2024, 15:25:21",
+            "rnd_end_datetime": "09/28/2024, 15:25:21",
             "rnd_matches": [
                 [
                     {
-                        "last_name": "Smith",
-                        "first_name": "Jane",
-                        "date_of_birth": "1988-11-20",
-                        "national_chess_id": "EN67890",
-                        "plyr_score": 0,
-                        "has_lost": true
-                    },
-                    {
-                        "last_name": "Doe",
-                        "first_name": "John",
-                        "date_of_birth": "1990-05-14",
-                        "national_chess_id": "EN12345",
-                        "plyr_score": 2,
-                        "has_lost": false
-                    }
-                ],
-                [
-                    {
-                        "last_name": "Dupont",
-                        "first_name": "Pierre",
-                        "date_of_birth": "1985-03-08",
-                        "national_chess_id": "FR12345",
+                        "last_name": "Yamada",
+                        "first_name": "Taro",
+                        "date_of_birth": "1992-07-10",
+                        "national_chess_id": "JP12345",
                         "plyr_score": 1,
                         "has_lost": true
                     },
@@ -43,6 +25,24 @@
                         "first_name": "Pierre",
                         "date_of_birth": "1985-03-08",
                         "national_chess_id": "FR12345",
+                        "plyr_score": 1,
+                        "has_lost": true
+                    }
+                ],
+                [
+                    {
+                        "last_name": "Smith",
+                        "first_name": "Jane",
+                        "date_of_birth": "1988-11-20",
+                        "national_chess_id": "EN67890",
+                        "plyr_score": 1,
+                        "has_lost": true
+                    },
+                    {
+                        "last_name": "Doe",
+                        "first_name": "John",
+                        "date_of_birth": "1990-05-14",
+                        "national_chess_id": "EN12345",
                         "plyr_score": 1,
                         "has_lost": true
                     }
@@ -51,33 +51,15 @@
         },
         {
             "rnd_name": "Round 2",
-            "rnd_start_datetime": "09/21/2024, 14:34:47",
-            "rnd_end_datetime": "09/21/2024, 14:34:47",
+            "rnd_start_datetime": "09/28/2024, 15:25:21",
+            "rnd_end_datetime": "09/28/2024, 15:25:21",
             "rnd_matches": [
                 [
                     {
-                        "last_name": "Smith",
-                        "first_name": "Jane",
-                        "date_of_birth": "1988-11-20",
-                        "national_chess_id": "EN67890",
-                        "plyr_score": 0,
-                        "has_lost": true
-                    },
-                    {
-                        "last_name": "Doe",
-                        "first_name": "John",
-                        "date_of_birth": "1990-05-14",
-                        "national_chess_id": "EN12345",
-                        "plyr_score": 2,
-                        "has_lost": false
-                    }
-                ],
-                [
-                    {
-                        "last_name": "Dupont",
-                        "first_name": "Pierre",
-                        "date_of_birth": "1985-03-08",
-                        "national_chess_id": "FR12345",
+                        "last_name": "Yamada",
+                        "first_name": "Taro",
+                        "date_of_birth": "1992-07-10",
+                        "national_chess_id": "JP12345",
                         "plyr_score": 1,
                         "has_lost": true
                     },
@@ -86,6 +68,24 @@
                         "first_name": "Pierre",
                         "date_of_birth": "1985-03-08",
                         "national_chess_id": "FR12345",
+                        "plyr_score": 1,
+                        "has_lost": true
+                    }
+                ],
+                [
+                    {
+                        "last_name": "Smith",
+                        "first_name": "Jane",
+                        "date_of_birth": "1988-11-20",
+                        "national_chess_id": "EN67890",
+                        "plyr_score": 1,
+                        "has_lost": true
+                    },
+                    {
+                        "last_name": "Doe",
+                        "first_name": "John",
+                        "date_of_birth": "1990-05-14",
+                        "national_chess_id": "EN12345",
                         "plyr_score": 1,
                         "has_lost": true
                     }
@@ -101,23 +101,23 @@
             "date_of_birth": "1990-05-14"
         },
         {
-            "national_chess_id": "EN67890",
-            "last_name": "Smith",
             "first_name": "Jane",
-            "date_of_birth": "1988-11-20"
+            "last_name": "Smith",
+            "date_of_birth": "1988-11-20",
+            "national_chess_id": "EN67890"
         },
         {
-            "national_chess_id": "FR12345",
-            "last_name": "Dupont",
             "first_name": "Pierre",
-            "date_of_birth": "1985-03-08"
+            "last_name": "Dupont",
+            "date_of_birth": "1985-03-08",
+            "national_chess_id": "FR12345"
         },
         {
-            "national_chess_id": "FR12345",
-            "last_name": "Dupont",
-            "first_name": "Pierre",
-            "date_of_birth": "1985-03-08"
+            "first_name": "Taro",
+            "last_name": "Yamada",
+            "date_of_birth": "1992-07-10",
+            "national_chess_id": "JP12345"
         }
     ],
-    "description": "test json file"
+    "description": "Test for adding input scores"
 }

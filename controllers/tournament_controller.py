@@ -64,9 +64,14 @@ class TournamentController:
 
     def start_tournament(self):
         self.tournament.set_total_nbr_rounds()
+        # while True:
         for round in range(self.tournament.number_of_rounds):
             self.tournament.generate_round()
-            self.tournament.start_round()
+            number_of_winners = self.tournament.start_round()
+            if number_of_winners == 1:
+                print("final winner decided") 
+                break
+            print("no final winner yet")
         self.tournament.add_rounds_to_file()
 
     def see_all_players(self):

@@ -23,7 +23,8 @@ class Round:
         else:
             sorted_player = {}
             for player in players:
-                if player.has_lost == False:
+                # if player.has_lost == False:
+                if not player.has_lost:
                     sorted_player[player.plyr_score]= player
                 
             sorted_player =dict(sorted(sorted_player.items())) 
@@ -36,6 +37,15 @@ class Round:
                 current_match = Match(player1, player2)
                 self.rnd_matches.append(current_match)
     
+    def check_round_winners(self):
+        players = []
+        for match in self.rnd_matches:
+            if not match.player1.has_lost:
+                players.append(match.player1)
+            if not match.player2.has_lost:
+                players.append(match.player2)
+                
+        return players
     def start_matches(self):
         for match in self.rnd_matches:
             match.play()

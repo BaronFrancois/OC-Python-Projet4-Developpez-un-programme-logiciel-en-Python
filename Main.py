@@ -2,6 +2,9 @@ import os
 import json
 from controllers.tournament_controller import TournamentController
 
+
+# user can put the score for matches (soutenance
+
 if os.path.exists("resources/resume_file.json"):
     with open("resources/resume_file.json","r") as file:
         details = json.load(file)
@@ -14,8 +17,8 @@ else:
     details = "empty"
 
 # créer un menu à étape
+tournament_manager = TournamentController()
 while True:
-    tournament_manager = TournamentController()
     if details == "empty":
         print("-----------------------------------------")
         print("press 1 to create tournament::")
