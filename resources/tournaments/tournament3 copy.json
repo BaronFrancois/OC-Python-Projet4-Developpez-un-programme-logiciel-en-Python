@@ -1,0 +1,36 @@
+{
+    "name": "tournament3",
+    "location": "paris",
+    "start_date": "28/09/2024",
+    "end_date": "28/09/2024",
+    "number_of_rounds": 4,
+    "current_round": 0,
+    "rounds": [],
+    "registered_players": [
+        {
+            "national_chess_id": "EN12345",
+            "last_name": "Doe",
+            "first_name": "John",
+            "date_of_birth": "1990-05-14"
+        },
+        {
+            "first_name": "Jane",
+            "last_name": "Smith",
+            "date_of_birth": "1988-11-20",
+            "national_chess_id": "EN67890"
+        },
+        {
+            "first_name": "Pierre",
+            "last_name": "Dupont",
+            "date_of_birth": "1985-03-08",
+            "national_chess_id": "FR12345"
+        },
+        {
+            "first_name": "Taro",
+            "last_name": "Yamada",
+            "date_of_birth": "1992-07-10",
+            "national_chess_id": "JP12345"
+        }
+    ],
+    "description": "Test for adding input scores"
+}

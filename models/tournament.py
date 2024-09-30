@@ -160,6 +160,7 @@ class Tournament:
         self.current_round_number += 1
         if self.current_round_number == 1:
             self.current_players = self.registered_players
+        print("generate round function", self.current_players)
         round_name = "Round " + str(self.current_round_number)
         print(round_name)
         start_date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")

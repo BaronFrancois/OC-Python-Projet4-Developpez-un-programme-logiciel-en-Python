@@ -13,7 +13,10 @@ class Match:
             self.player1.has_lost = True
         elif score2 == 0:
             self.player2.has_lost = True
+        elif score1 == 0.5:
+            self.play()
         self.player1.plyr_score += score1
         self.player2.plyr_score += score2
+            
 
 
