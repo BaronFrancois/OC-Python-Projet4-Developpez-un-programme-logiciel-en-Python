@@ -56,20 +56,43 @@ class TournamentController:
                 json.dump(data,file,indent=4)
             return False
         else:
-            print("application closed tournament controller part")
-            self.tournament.register_player(
-                chess_id, last_name, first_name, birthday, country, club_name
-            )
+            registered = False
+            for player in self.tournament.registered_players:
+                if player.national_chess_id == chess_id:
+                    print("Player is already registered")
+                    registered = True
+                    break
+            if registered == False :    
+                print("application closed tournament controller part")
+                self.tournament.register_player(
+                    chess_id, last_name, first_name, birthday, country, club_name
+                )
             return True
 
     def start_tournament(self):
+        self.tournament.reset_rounds()
         self.tournament.set_total_nbr_rounds()
         # while True:
         for round in range(self.tournament.number_of_rounds):
             self.tournament.generate_round()
-            number_of_winners = self.tournament.start_round()
+            for match in self.tournament.rounds[round].rnd_matches:
+                while True:
+                    # print("//start",match.player1.first_name,match.player2.first_name)
+                    ask_result = ask_match_result(match.player1,match.player2)
+                    if ask_result == 1 or ask_result == 2 :
+                        break
+                    elif ask_result != 3:
+                        print("please enter a valid option:")
+                    elif ask_result == 3:
+                        print("match is draw, the players are playing again.")
+                        
+                        
+                match.play(ask_result)
+                print(match.player1.first_name,match.player1.plyr_score, "//" ,match.player2.first_name,match.player2.plyr_score)
+            number_of_winners, winners = self.tournament.start_round()
             if number_of_winners == 1:
                 print("final winner decided") 
+                print("the tournament winner is", winners[0].first_name)
                 break
             print("no final winner yet")
         self.tournament.add_rounds_to_file()

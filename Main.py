@@ -17,8 +17,9 @@ else:
     details = "empty"
 
 # créer un menu à étape
-tournament_manager = TournamentController()
 while True:
+    tournament_manager = TournamentController()
+    # when it starts with an empty tournament
     if details == "empty":
         print("-----------------------------------------")
         print("press 1 to create tournament::")

@@ -161,3 +161,11 @@ def show_round_matches(player1, player2):
     print(f"scores {player1.plyr_score}, {player2.plyr_score}")
     print(f"winner {not player1.has_lost}, {not player2.has_lost}")
     print("---------------------------")
+    
+def ask_match_result(player1, player2):
+    print(player1.first_name,"///VS///" ,player2.first_name)
+    print(f'press 1 {player1.first_name} won the match ')
+    print(f'press 2 {player2.first_name} won the match ')
+    print('press 3 for draw')
+    ask_result = int(input(""))
+    return ask_result

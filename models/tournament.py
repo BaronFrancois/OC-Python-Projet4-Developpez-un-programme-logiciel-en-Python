@@ -160,7 +160,7 @@ class Tournament:
         self.current_round_number += 1
         if self.current_round_number == 1:
             self.current_players = self.registered_players
-        print("generate round function", self.current_players)
+        # print("generate round function", self.current_players)
         round_name = "Round " + str(self.current_round_number)
         print(round_name)
         start_date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
@@ -174,12 +174,12 @@ class Tournament:
 # check plyr_score first match within the round
 # sum(score_plyr1 + score_plyr2) == 1
     def start_round(self):
-        self.rounds[self.current_round_number - 1].start_matches()
+        # self.rounds[self.current_round_number - 1].start_matches()
         self.rounds[
             self.current_round_number - 1
         ].rnd_end_datetime = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         self.current_players = self.rounds[self.current_round_number - 1].check_round_winners()
-        return len(self.current_players)
+        return len(self.current_players), self.current_players
         
     def add_rounds_to_file(self):
         with open(f"resources/tournaments/{self.name}.json", "r") as file:
@@ -191,7 +191,7 @@ class Tournament:
                 "rnd_end_datetime": round.rnd_end_datetime,
             }
             tournament_round_matches = []
-            print(len(round.rnd_matches))
+            # print(len(round.rnd_matches))
             for match in round.rnd_matches:
                 round_match = [
                     {
@@ -216,4 +216,10 @@ class Tournament:
             tournament["rounds"].append(tournament_round)
         with open(f"resources/tournaments/{self.name}.json", "w") as file:
             json.dump(tournament, file, indent=4)
-            print("New player saved succesfully !")
+    def reset_rounds(self):
+        self.rounds = []        
+        with open(f"resources/tournaments/{self.name}.json", "r") as file:
+            tournament = json.load(file)
+        tournament["rounds"]= []
+        with open(f"resources/tournaments/{self.name}.json", "w") as file:
+            json.dump(tournament, file, indent=4)
