@@ -19,7 +19,7 @@ else:
 # créer un menu à étape
 while True:
     tournament_manager = TournamentController()
-    # when it starts with an empty tournament
+    # when it starts with an empty tournament,
     if details == "empty":
         print("-----------------------------------------")
         print("press 1 to create tournament::")
@@ -29,7 +29,7 @@ while True:
         print("press 4 to register player:")
         print("press 5 to start the tournament:")
         print("press 6 search for particular tournament :")
-        print("press 7 to see the list of all players in particular     tournament :")
+        print("press 7 to see the list of all players in particular tournament :")
         print("press 8 to see all rounds and matches in tournament :")
         print("press 9 to exit:")
 

@@ -138,21 +138,25 @@ def create_tournament_view(details = None):
 
 def show_all_players(players):
     for name, chess_id in players.items():
-        print(f"Name: {name},\t\tChess ID: {chess_id}")
+        print(f"Chess ID: {chess_id},\t\tName: {name}")
+    report_ask = input("Do you want to save the players inside the report ?  Y/N :")
+    return report_ask
 
 
-def show_all_tournaments(tournaments):
-    for tournament in tournaments:
+def show_all_tournaments(tournament):
+    
         print(
             f"name:{tournament["name"]}, location :{tournament["location"]}, start_date:{tournament["start_date"]}, end_date:{tournament["end_date"]}"
         )
-
+def ask_for_report():
+    ask_report = input("Do you want to save the report ? y/n :")
+    return ask_report.lower()
 
 def show_tournament_round(round_name, start_date_time, end_date_time):
     print(
         f"round name:{round_name}, start date time:{start_date_time}, end date time:{end_date_time}"
     )
-# check all of the options main menu's, the files, start the tournament, check details
+
 def show_round_matches(player1, player2):
     print("player 1 vs player 2")
     print(f"name {player1.last_name} {player1.first_name}, {player2.last_name} {player2.first_name}" )

@@ -8,41 +8,41 @@
     "rounds": [
         {
             "rnd_name": "Round 1",
-            "rnd_start_datetime": "10/03/2024, 14:51:23",
-            "rnd_end_datetime": "10/03/2024, 14:51:44",
+            "rnd_start_datetime": "10/10/2024, 15:18:00",
+            "rnd_end_datetime": "10/10/2024, 15:18:23",
             "rnd_matches": [
                 [
-                    {
-                        "last_name": "Smith",
-                        "first_name": "Jane",
-                        "date_of_birth": "1988-11-20",
-                        "national_chess_id": "EN67890",
-                        "plyr_score": 2,
-                        "has_lost": false
-                    },
                     {
                         "last_name": "Doe",
                         "first_name": "John",
                         "date_of_birth": "1990-05-14",
                         "national_chess_id": "EN12345",
+                        "plyr_score": 2,
+                        "has_lost": false
+                    },
+                    {
+                        "last_name": "Smith",
+                        "first_name": "Jane",
+                        "date_of_birth": "1988-11-20",
+                        "national_chess_id": "EN67890",
                         "plyr_score": 0,
                         "has_lost": true
                     }
                 ],
                 [
                     {
-                        "last_name": "Yamada",
-                        "first_name": "Taro",
-                        "date_of_birth": "1992-07-10",
-                        "national_chess_id": "JP12345",
-                        "plyr_score": 1,
-                        "has_lost": true
-                    },
-                    {
                         "last_name": "Dupont",
                         "first_name": "Pierre",
                         "date_of_birth": "1985-03-08",
                         "national_chess_id": "FR12345",
+                        "plyr_score": 1,
+                        "has_lost": true
+                    },
+                    {
+                        "last_name": "Yamada",
+                        "first_name": "Taro",
+                        "date_of_birth": "1992-07-10",
+                        "national_chess_id": "JP12345",
                         "plyr_score": 0,
                         "has_lost": true
                     }
@@ -51,23 +51,23 @@
         },
         {
             "rnd_name": "Round 2",
-            "rnd_start_datetime": "10/03/2024, 14:51:44",
-            "rnd_end_datetime": "10/03/2024, 14:52:07",
+            "rnd_start_datetime": "10/10/2024, 15:18:23",
+            "rnd_end_datetime": "10/10/2024, 15:18:31",
             "rnd_matches": [
                 [
                     {
-                        "last_name": "Smith",
-                        "first_name": "Jane",
-                        "date_of_birth": "1988-11-20",
-                        "national_chess_id": "EN67890",
+                        "last_name": "Doe",
+                        "first_name": "John",
+                        "date_of_birth": "1990-05-14",
+                        "national_chess_id": "EN12345",
                         "plyr_score": 2,
                         "has_lost": false
                     },
                     {
-                        "last_name": "Yamada",
-                        "first_name": "Taro",
-                        "date_of_birth": "1992-07-10",
-                        "national_chess_id": "JP12345",
+                        "last_name": "Dupont",
+                        "first_name": "Pierre",
+                        "date_of_birth": "1985-03-08",
+                        "national_chess_id": "FR12345",
                         "plyr_score": 1,
                         "has_lost": true
                     }

@@ -101,15 +101,34 @@ class TournamentController:
         with open("resources/clubs.json", "r") as file:
             data = json.load(file)
             all_players = {}
+            player_details = {}
+            longest_first_name = longest_last_name = longest_fed_name = longest_club_name = 0
             for federation in data["federations"]:
                 for club in federation["clubs"]:
                     for player in club["players"]:
                         key = f"{player['last_name']} {player['first_name']}"
                         value = f"{player['national_chess_id']}"
                         all_players[key] = value
+                        player_details[key] = [player['national_chess_id'],player['last_name'],player['first_name'],federation["name"],club["club_name"]]
+                        longest_first_name = max(longest_first_name,len(player["first_name"]))
+                        longest_last_name = max(longest_last_name,len(player["last_name"]))
+                        longest_fed_name = max(longest_fed_name,len(federation["name"]))
+                        longest_club_name = max(longest_club_name,len(club["club_name"]))
             all_players = dict(sorted(all_players.items()))
 
-            show_all_players(all_players)
+            report_ask = show_all_players(all_players)
+            if report_ask.lower() == "y":
+                report = []
+                report.append(f'| Chess Id | {"LN":<{longest_last_name}} | {"FN":<{longest_first_name}} | {"FED":<{longest_fed_name}} | {"CLUB":<{longest_club_name}} | \n')
+                report.append(f'| ________ | {"_"*(longest_last_name)} | {"_"*(longest_first_name)} | {"_"*(longest_fed_name)} | {"_"*(longest_club_name)} | \n')
+                for name in all_players:
+                    player = player_details[name]
+                    report.append(f'| {player[0]:<8} | {player[1]:<{longest_last_name}} | {player[2]:<{longest_first_name}} | {player[3]:<{longest_fed_name}} | {player[4]:<{longest_club_name}} |\n')
+                with open("resources/reports/all_players_report.txt","w") as file:
+                    file.writelines(report) 
+                    print("report has been generated")
+            # to do 05/10/24: complete line 125
+                
 
     def see_all_tournaments(self):
         path = os.path.join("resources/tournaments", "*.json")
@@ -120,21 +139,61 @@ class TournamentController:
             with open(file_name) as file:
                 data = json.load(file)
                 tournaments.append(data)
-        show_all_tournaments(tournaments)
+        longest_t_name = longest_location = 0
+        for tournament in tournaments:
+            show_all_tournaments(tournament)
+            longest_t_name =max(longest_t_name,len(tournament["name"]))
+            longest_location =max(longest_location,len(tournament["location"])) 
+        ask_report = ask_for_report()
+        if ask_report == "y":
+            report = []
+            report.append(f'| {"TName":<{longest_t_name}} | {"Location":<{max(longest_location,8)}} | {"Start date":<10} | {"End date":<10} | \n')
+            report.append(f'| {"_"*(longest_t_name)} | {"_"*(max(longest_location,8))} | {"_"*10} | {"_"*10} | \n')
+            for tournament in tournaments:
+                report.append(f'| {tournament["name"]:<{longest_t_name}} | {tournament["location"]:<{max(longest_location,8)}} | {tournament["start_date"]:<10} | {tournament["end_date"]:<10} |\n')
+            with open("resources/reports/all_tournaments_report.txt","w") as file:
+                file.writelines(report) 
+                print("tournaments report has been generated")
+            
 
     def search_tournament(self):
         print(self.tournament)
-
+        ask_report = ask_for_report()
+        if ask_report == "y":
+            report = []
+            report.append(f'| {"TName":<{len(self.tournament.name)}} | {"Start date":<10} | {"End date":<10} | \n')
+            report.append(f'| {"_"*len(self.tournament.name)} | {"_"*10} | {"_"*10} | \n')
+            report.append(f'| {self.tournament.name:<{len(self.tournament.name)}} | {self.tournament.start_date:<10} | {self.tournament.end_date:<10} | \n')
+            with open(f"resources/reports/{self.tournament.name}_report.txt","w") as file:
+                file.writelines(report) 
+                print(f"{self.tournament.name}'s report has been generated")
     def show_tournament_players(self):
         players = self.tournament.registered_players
         all_players = {}
+        player_details = {}
+        longest_first_name = longest_last_name = 0
         # print(players)
         for player in players:
             key = f"{player.last_name} {player.first_name}"
             value = f"{player.national_chess_id}"
             all_players[key] = value
+            player_details[key] = [player.national_chess_id,player.last_name,player.first_name,player.date_of_birth]
+            longest_first_name = max(longest_first_name,len(player.first_name))
+            longest_last_name = max(longest_last_name,len(player.last_name))
         all_players = dict(sorted(all_players.items()))
-        show_all_players(all_players)
+        
+        report_ask = show_all_players(all_players)
+        if report_ask.lower() == "y":
+            report = []
+            report.append(f'| Chess Id | {"LN":<{longest_last_name}} | {"FN":{longest_first_name}} | {"DOB":<{10}} | \n')
+            report.append(f'| ________ | {"_"*(longest_last_name)} | {"_"*(longest_first_name)} | {"_"*(10)} | \n')
+            for name in all_players:
+                player = player_details[name]
+                report.append(f'| {player[0]:<8} | {player[1]:{longest_last_name}} | {player[2]:<{longest_first_name}} | {player[3]:<{10}} |\n')
+            with open(f"resources/reports/reg_players_{self.tournament.name}_report.txt","w") as file:
+                file.writelines(report) 
+                print(f"{self.tournament.name}'s players report has been generated")
+        
 
     def show_tournament_report(self):
         for round in self.tournament.rounds:

@@ -1,0 +1,5 @@
+
+● liste de tous les tours du tournoi et de tous les matchs du tour.
+check round loading in option 8 
+(output of final score instead of "current" round score)
+12/10/2024

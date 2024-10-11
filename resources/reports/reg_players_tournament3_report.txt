@@ -1,0 +1,6 @@
+| Chess Id | LN     | FN     | DOB        | 
+| ________ | ______ | ______ | __________ | 
+| EN12345  | Doe    | John   | 1990-05-14 |
+| FR12345  | Dupont | Pierre | 1985-03-08 |
+| EN67890  | Smith  | Jane   | 1988-11-20 |
+| JP12345  | Yamada | Taro   | 1992-07-10 |
