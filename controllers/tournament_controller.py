@@ -1,5 +1,6 @@
 from views.registration_view import *
 from models.tournament import Tournament
+from utils.report_util import ReportUtil
 import json
 import glob
 import os
@@ -28,8 +29,7 @@ class TournamentController:
                     "tmt_description": tmt_description
                     }
             
-            with open("resources/resume_file.json","w") as file:
-                json.dump(data,file,indent=4)
+            ReportUtil.save_resume_file(data)
             return False
         else:
             self.tournament = Tournament(
@@ -53,8 +53,7 @@ class TournamentController:
                     "last_name": last_name,
                     "first_name": first_name,
                     "birthday":birthday}
-            with open("resources/resume_file.json","w") as file:
-                json.dump(data,file,indent=4)
+            ReportUtil.save_resume_file(data)
             return False
         else:
             registered = False

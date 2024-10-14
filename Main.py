@@ -32,7 +32,6 @@ def main():
 
     while True:
         tournament_manager = TournamentController()
-        # when it starts with an empty tournament,
         if details :
             user_input = details["option_number"]
         else:
