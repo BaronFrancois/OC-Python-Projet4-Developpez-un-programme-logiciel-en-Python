@@ -62,14 +62,7 @@ def register_player_view(details = None):
         print("application closed")
     return (chess_id, last_name, first_name, birthday, country, club_name)
 
-# implement when press 0, stop the code
 def create_tournament_view(details = None):
-    # tmt_name = input("enter the tournament name:")
-    # tmt_location = input("enter the tournament location:")
-    # tmt_start_date = input("enter the tournament start date:")
-    # tmt_end_date = input("enter the tournament end date:")
-    # tmt_description = input("enter the tournament description:")
-    # return (tmt_name, tmt_location, tmt_start_date, tmt_end_date, tmt_description)
     if details:
         tmt_name = details["tmt_name"]
         tmt_location = details["tmt_location"]
