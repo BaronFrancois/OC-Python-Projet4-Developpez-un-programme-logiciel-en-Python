@@ -26,24 +26,65 @@ def resume_app():
     else:
         details = None
     return details
+details = resume_app()
 
-def main(): 
-    details = resume_app()
+# créer un menu à étape
+while True:
+    tournament_manager = TournamentController()
+    # when it starts with an empty tournament,
+    if not details:
+        show_menu()
 
-    while True:
-        tournament_manager = TournamentController()
-        # when it starts with an empty tournament,
-        if details :
-            user_input = details["option_number"]
-        else:
-            show_menu()
-            user_input = int(input("enter your choice (number):"))
-
+        user_input = int(input("enter your choice (number):"))
         if user_input in [4,5,6,7,8]:
-            if details:
-                tournament_name = details["tournament"]
+            tournament_name = input("enter the tournament name:")
+            tournament_manager.load_tournament_data(tournament_name)
+            # create the exit and save
+        if user_input == 1:
+            succes = tournament_manager.create_tournament()            
+            if not succes:
+                break
             else:
-                tournament_name = input("enter the tournament name:")
+                print("the tournament has been created")
+        elif user_input == 2:
+            tournament_manager.see_all_players()
+
+        elif user_input == 3:
+            tournament_manager.see_all_tournaments()
+
+        elif user_input == 4:
+            if not tournament_manager.tournament:
+                print("No tournament exists yet")
+            else:
+                succes = tournament_manager.register_player()
+                if not succes:
+                    break
+
+        elif user_input == 5:
+            if not tournament_manager.tournament:
+                print("No tournament exists yet")
+            else:
+                tournament_manager.start_tournament()
+        elif user_input == 6:
+            tournament_manager.search_tournament()
+
+        elif user_input == 7:
+            tournament_manager.show_tournament_players()
+
+        elif user_input == 8:
+            tournament_manager.show_tournament_report()
+
+        elif user_input == 9:
+            print("thank you for using the application:")
+            break
+        else :
+            print("please select a valid option:")
+
+# if resume file is present
+    else: 
+        user_input = details["option_number"]
+        if user_input in [4,5,6,7,8]:
+            tournament_name = details["tournament"]
             tournament_manager.load_tournament_data(tournament_name)
 
         if user_input == 1:
@@ -52,7 +93,7 @@ def main():
                 break
             else:
                 print("the tournament has been created")
-
+                
         elif user_input == 2:
             tournament_manager.see_all_players()
 
@@ -88,5 +129,3 @@ def main():
             print("please select a valid option:")
         details = None
 
-if __name__== '__main__':
-    main()

@@ -1,0 +1,11 @@
+{
+    "name": "tournament4",
+    "location": "paris",
+    "start_date": "14/10/2024",
+    "end_date": "14/10/2024",
+    "description": "description",
+    "number_of_rounds": 4,
+    "current_round": 0,
+    "rounds": [],
+    "registered_players": []
+}

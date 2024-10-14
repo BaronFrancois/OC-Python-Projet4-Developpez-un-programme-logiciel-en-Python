@@ -16,8 +16,9 @@ check round loading in option 8
 
 - soutenance :  faire un tournois, quitter recharger,rapport
 
-    -exemple class, 
+-exemple class, 
 -clean the code, repetition -> function
+----------------------------------------------------------------------------------
 (2-create utils folder / report_util.py)
 
 with open(f"resources/reports/rounds_&_matches_{self.tournament.name}_report.txt","w") as file:
@@ -32,3 +33,18 @@ def save_report(report, ouput_file):
 report = []
 report.append(f"----")
 save_report(report, f'rounds_&_matches_{self.tournament.name}_report.txt')
+----------------------------------------------------------------------------------
+Fix testes files (functions names)
+----------------------------------------------------------------------------------
+fix :
+enter your choice (number):7
+enter the tournament name:tournament4
+Do you want to save the players inside the report ?  Y/N :y
+tournament4's players report has been generated
+
+15/10/2024
+----------------------------------------------------------------------------------
+Make code flexible for resuming app & reports
+----------------------------------------------------------------------------------
+-find similare lines inside of tournament_controller () change save json function
+----------------------------------------------------------------------------------

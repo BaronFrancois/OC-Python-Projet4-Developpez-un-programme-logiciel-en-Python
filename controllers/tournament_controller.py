@@ -11,7 +11,7 @@ class TournamentController:
 
     def load_tournament_data(self, name):
         self.tournament = Tournament(name, None, None, None, None)
-        is_data_loaded = self.tournament.load_data()
+        is_data_loaded = self.tournament.load()
         if not is_data_loaded:
             self.tournament = None
 
@@ -27,6 +27,7 @@ class TournamentController:
                     "tmt_end_date": tmt_end_date,
                     "tmt_description": tmt_description
                     }
+            
             with open("resources/resume_file.json","w") as file:
                 json.dump(data,file,indent=4)
             return False
@@ -34,7 +35,7 @@ class TournamentController:
             self.tournament = Tournament(
                 tmt_name, tmt_location, tmt_start_date, tmt_end_date, tmt_description
             )
-            self.tournament.save_tournament_details()
+            self.tournament.save()
             return True
 
     def register_player(self, details= None):
@@ -127,7 +128,7 @@ class TournamentController:
                 with open("resources/reports/all_players_report.txt","w") as file:
                     file.writelines(report) 
                     print("report has been generated")
-            # to do 05/10/24: complete line 125
+      
                 
 
     def see_all_tournaments(self):
