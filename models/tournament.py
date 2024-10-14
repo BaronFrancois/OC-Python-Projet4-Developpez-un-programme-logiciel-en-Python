@@ -184,36 +184,37 @@ class Tournament:
     def add_rounds_to_file(self):
         with open(f"resources/tournaments/{self.name}.json", "r") as file:
             tournament = json.load(file)
-        for round in self.rounds:
-            tournament_round = {
-                "rnd_name": round.rnd_name,
-                "rnd_start_datetime": round.rnd_start_datetime,
-                "rnd_end_datetime": round.rnd_end_datetime,
-            }
-            tournament_round_matches = []
-            # print(len(round.rnd_matches))
-            for match in round.rnd_matches:
-                round_match = [
-                    {
-                        "last_name": match.player1.last_name,
-                        "first_name": match.player1.first_name,
-                        "date_of_birth": match.player1.date_of_birth,
-                        "national_chess_id": match.player1.national_chess_id,
-                        "plyr_score": match.player1.plyr_score,
-                        "has_lost": match.player1.has_lost,
-                    },
-                    {
-                        "last_name": match.player2.last_name,
-                        "first_name": match.player2.first_name,
-                        "date_of_birth": match.player2.date_of_birth,
-                        "national_chess_id": match.player2.national_chess_id,
-                        "plyr_score": match.player2.plyr_score,
-                        "has_lost": match.player2.has_lost,
-                    },
-                ]
-                tournament_round_matches.append(round_match)
-            tournament_round["rnd_matches"] = tournament_round_matches
-            tournament["rounds"].append(tournament_round)
+        # for round in self.rounds:
+        round = self.rounds[self.current_round_number -1]
+        tournament_round = {
+            "rnd_name": round.rnd_name,
+            "rnd_start_datetime": round.rnd_start_datetime,
+            "rnd_end_datetime": round.rnd_end_datetime,
+        }
+        tournament_round_matches = []
+        # print(len(round.rnd_matches))
+        for match in round.rnd_matches:
+            round_match = [
+                {
+                    "last_name": match.player1.last_name,
+                    "first_name": match.player1.first_name,
+                    "date_of_birth": match.player1.date_of_birth,
+                    "national_chess_id": match.player1.national_chess_id,
+                    "plyr_score": match.player1.plyr_score,
+                    "has_lost": match.player1.has_lost,
+                },
+                {
+                    "last_name": match.player2.last_name,
+                    "first_name": match.player2.first_name,
+                    "date_of_birth": match.player2.date_of_birth,
+                    "national_chess_id": match.player2.national_chess_id,
+                    "plyr_score": match.player2.plyr_score,
+                    "has_lost": match.player2.has_lost,
+                },
+            ]
+            tournament_round_matches.append(round_match)
+        tournament_round["rnd_matches"] = tournament_round_matches
+        tournament["rounds"].append(tournament_round)
         with open(f"resources/tournaments/{self.name}.json", "w") as file:
             json.dump(tournament, file, indent=4)
     def reset_rounds(self):

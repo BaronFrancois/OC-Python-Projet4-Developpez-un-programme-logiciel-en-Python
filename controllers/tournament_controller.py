@@ -90,12 +90,12 @@ class TournamentController:
                 match.play(ask_result)
                 print(match.player1.first_name,match.player1.plyr_score, "//" ,match.player2.first_name,match.player2.plyr_score)
             number_of_winners, winners = self.tournament.start_round()
+            self.tournament.add_rounds_to_file()
             if number_of_winners == 1:
                 print("final winner decided") 
                 print("the tournament winner is", winners[0].first_name)
                 break
             print("no final winner yet")
-        self.tournament.add_rounds_to_file()
 
     def see_all_players(self):
         with open("resources/clubs.json", "r") as file:
@@ -196,13 +196,24 @@ class TournamentController:
         
 
     def show_tournament_report(self):
+        longest_first_name = longest_last_name = 0
         for round in self.tournament.rounds:
             show_tournament_round(
                 round.rnd_name, round.rnd_start_datetime, round.rnd_end_datetime
             )
             for match in round.rnd_matches:
                 show_round_matches(match.player1, match.player2)
+                longest_first_name = max(longest_first_name,len(match.player1.first_name),len(match.player2.last_name))
+                longest_last_name = max(longest_last_name,len(match.player1.last_name),len(match.player2.last_name))
                 
-    
-        
-            
+        ask_report = ask_for_report()
+        if ask_report.lower() == "y":
+            report = []
+            report.append(f'| Round n | {"Round SD":<{20}} | {"Round ED":<{20}} | P1 Chess Id | {"P1 LN":<{longest_last_name}} | {"P1 FN":{longest_first_name}} | {"P1 Score":<{7}} | P2 Chess Id | {"P2 LN":<{longest_last_name}} | {"P2 FN":{longest_first_name}} | {"P2 Score":<{8}} | \n')
+            report.append(f'| {"_"*(7)} | {"_"*(20)} | {"_"*(20)} | {"_"*(11)} | {"_"*(longest_last_name)} | {"_"*(longest_first_name)} | {"_"*(8)} | {"_"*(11)} | {"_"*(longest_last_name)} | {"_"*(longest_first_name)} | {"_"*(8)} | \n')
+            for round in self.tournament.rounds :
+                for match in round.rnd_matches :
+                    report.append(f'| {round.rnd_name:<{7}} | {round.rnd_start_datetime:<{20}} | {round.rnd_end_datetime:<{20}} | {match.player1.national_chess_id:<{11}} | {match.player1.last_name:<{longest_last_name}} | {match.player1.first_name:{longest_first_name}} | {match.player1.plyr_score:<{8}} | {match.player2.national_chess_id :<{11}} | {match.player2.last_name:<{longest_last_name}} | {match.player2.first_name:{longest_first_name}} | {match.player2.plyr_score:<{8}} | \n')
+            with open(f"resources/reports/rounds_&_matches_{self.tournament.name}_report.txt","w") as file:
+                file.writelines(report) 
+                print(f"{self.tournament.name}'s rounds and matches report has been generated")
