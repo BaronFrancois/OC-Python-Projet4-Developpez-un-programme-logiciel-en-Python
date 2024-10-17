@@ -39,6 +39,7 @@ def register_player_view(details = None):
                 break
             else:
                 print("Please enter a valid National Chess ID (2 uppercase letters followed by 5 digits).")
+                chess_id = None
 
     if chess_id and chess_id != '0':
         if not last_name:

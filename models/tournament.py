@@ -61,11 +61,46 @@ class Tournament:
         else:
             return False
 
-    def register_player(self, player):
-        # Register a new player to the tournament
-        self.registered_players.append(player)
-        self.save()
+    def register_player(
+        self, chess_id, last_name, first_name, birthday, country, club_name):
+        is_verified_player = self.verify_player(chess_id, country, club_name)
+        if is_verified_player:
+            new_player = Player(last_name, first_name, birthday, chess_id)
+            self.registered_players.append(new_player)
+            self.add_player_to_file(new_player)
+        else:
+            print("player is not verified")
 
+    def verify_player(self, chess_id, country, club_name):
+        with open("resources/clubs.json", "r") as file:
+            details = json.load(file)
+            fed = details["federations"]
+            for f in fed:
+                if f["country"] == country:
+                    clubs = f["clubs"]
+                    for club in clubs:
+                        if club["club_name"] == club_name:
+                            players = club["players"]
+                            for player in players:
+                                if player["national_chess_id"] == chess_id:
+                                    return True
+        return False
+
+    def add_player_to_file(self, new_player):
+        player = {
+            "national_chess_id": new_player.national_chess_id,
+            "last_name": new_player.last_name,
+            "first_name": new_player.first_name,
+            "date_of_birth": new_player.date_of_birth,
+        }
+
+        with open(f"resources/tournaments/{self.name}.json", "r") as file:
+            tournament = json.load(file)
+            # print(tournament)
+        tournament["registered_players"].append(player)
+        with open(f"resources/tournaments/{self.name}.json", "w") as file:
+            json.dump(tournament, file, indent=4)
+            print("New player saved succesfully !")
     def generate_round(self):
         # Generate matches for the next round
         self.current_round_number += 1
@@ -148,3 +183,9 @@ class Tournament:
         player1 = self._dict_to_player(data["player1"])
         player2 = self._dict_to_player(data["player2"])
         return Match(player1, player2)
+    
+    def get_reg_player_ids(self):
+        ids = []
+        for player in self.registered_players:
+            ids.append(player.national_chess_id)
+        return  ids

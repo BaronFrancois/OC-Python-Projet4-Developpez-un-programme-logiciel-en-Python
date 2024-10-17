@@ -29,6 +29,16 @@ def resume_app():
 
 def main(): 
     details = resume_app()
+    options = {
+                1:'create_tournament',
+                2:'see_all_players',
+                3:'see_all_tournaments',
+                4:'register_player',
+                5:'start_tournament',
+                6:'search_tournament',
+                7:'show_tournament_players',
+                8:'show_tournament_report'
+            }
 
     while True:
         tournament_manager = TournamentController()
@@ -38,51 +48,24 @@ def main():
             show_menu()
             user_input = int(input("enter your choice (number):"))
 
-        if user_input in [4,5,6,7,8]:
+        if user_input == 9:
+            print("thank you for using the application:")
+            break
+        if user_input in range (4,9):
             if details:
                 tournament_name = details["tournament"]
             else:
                 tournament_name = input("enter the tournament name:")
-            tournament_manager.load_tournament_data(tournament_name)
+            is_loaded = tournament_manager.load(tournament_name)
+            if not is_loaded:
+                print("no such tournament exists")
+                continue
 
-        if user_input == 1:
-            succes = tournament_manager.create_tournament(details)            
+        if user_input in range(1,9):
+            func = getattr(tournament_manager,options[user_input])
+            succes = func(details, user_input)
             if not succes:
                 break
-            else:
-                print("the tournament has been created")
-
-        elif user_input == 2:
-            tournament_manager.see_all_players()
-
-        elif user_input == 3:
-            tournament_manager.see_all_tournaments()
-
-        elif user_input == 4:
-            if not tournament_manager.tournament:
-                print("No tournament exists yet")
-            else:
-                succes = tournament_manager.register_player(details)
-                if not succes:
-                    break
-
-        elif user_input == 5:
-            if not tournament_manager.tournament:
-                print("No tournament exists yet")
-            else:
-                tournament_manager.start_tournament()
-        elif user_input == 6:
-            tournament_manager.search_tournament()
-
-        elif user_input == 7:
-            tournament_manager.show_tournament_players()
-
-        elif user_input == 8:
-            tournament_manager.show_tournament_report()
-
-        elif user_input == 9:
-            print("thank you for using the application:")
-            break
         else :
             print("please select a valid option:")
         details = None

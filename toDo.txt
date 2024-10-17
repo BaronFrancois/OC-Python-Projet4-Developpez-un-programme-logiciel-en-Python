@@ -35,12 +35,6 @@ report.append(f"----")
 save_report(report, f'rounds_&_matches_{self.tournament.name}_report.txt')
 ----------------------------------------------------------------------------------
 Fix testes files (functions names)
-----------------------------------------------------------------------------------
-fix :
-enter your choice (number):7
-enter the tournament name:tournament4
-Do you want to save the players inside the report ?  Y/N :y
-tournament4's players report has been generated
 
 15/10/2024
 ----------------------------------------------------------------------------------
@@ -48,3 +42,14 @@ Make code flexible for resuming app & reports
 ----------------------------------------------------------------------------------
 -find similare lines inside of tournament_controller () change save json function
 ----------------------------------------------------------------------------------
+Note for tournament controller :
+génération de rapports utilitaires pour éviter la duplication de code.
+Ajouter des blocs try-except pour gérer les exceptions potentielles (utilisateur input)
+Créer des schémas validations d'input
+Peut être les types ?
+----------------------------------------------------------------------------------
+quand on enregistre un joueur, quand on demande le nom du tournois -> s'il n'existe pas on devrait arreter l'enregistrement
+-check If Chess_id exists in club.json
+----------------------------------------------------------------------------------
+19/10/2024
+Validate registrating personn

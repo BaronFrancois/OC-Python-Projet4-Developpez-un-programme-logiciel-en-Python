@@ -1,4 +1,4 @@
-from views.registration_view import *
+from views.tournament_view import View
 from models.tournament import Tournament
 from utils.report_util import ReportUtil
 import json
@@ -6,22 +6,25 @@ import glob
 import os
 
 
+
 class TournamentController:
     def __init__(self):
         # Initialize the tournament attribute
         self.tournament = None
     
-    def load_tournament_data(self, name):
+    def load (self, name):
         # Load tournament data from a JSON file based on the tournament name.
         self.tournament = Tournament(name, None, None, None, None)
         is_data_loaded = self.tournament.load()
         if not is_data_loaded:
             self.tournament = None
+            return False
+        return True
 
     def create_tournament(self, details = None):
         # Create a new tournament using user-provided details.
         tmt_name, tmt_location, tmt_start_date, tmt_end_date, tmt_description = (
-            create_tournament_view(details)
+            View.create_tournament_view(details)
         )
         # Check if the user wants to exit the creation process with pressing 0
         if tmt_name == '0' or tmt_location == '0' or tmt_start_date == '0' or tmt_end_date == '0' or tmt_description == '0':
@@ -45,42 +48,29 @@ class TournamentController:
             return True
         
     # Register a player to the tournament.
-    def register_player(self, details= None):
-        chess_id, last_name, first_name, birthday, country, club_name = (
-            register_player_view(details)
-        )
-        # Check if the user wants to exit the registration process
-        if country == '0' or club_name == '0' or chess_id == '0' or first_name == '0' or last_name == '0' or birthday == '0':
-            print("Registration process exited tournament controller part.")
-            data = {"option_number":4,
-                    "tournament":self.tournament.name,
-                    "country":country,
-                    "club_name": club_name,
-                    "chess_id": chess_id,
-                    "last_name": last_name,
-                    "first_name": first_name,
-                    "birthday":birthday}
-            
+    def register_player(self, details= None, option_number = None):
+        details = View.register_player(details)
+        if "0" in details.values():
+            details["option_number"] = option_number
+            details["tournament"] = self.tournament.name
             # Save the current state to resume later from P4\utils\report_util.py
-            ReportUtil.save_resume_file(data)
+            self.save_backup(details)
             return False
         else:
-            registered = False
-            # Check if the player is already registered
-            for player in self.tournament.registered_players:
-                if player.national_chess_id == chess_id:
-                    print("Player is already registered")
-                    registered = True
-                    break
-            if registered == False :    
-                print("application closed tournament controller part")
+            if details["chess_id"] in self.tournament.get_reg_player_ids():
+                print("Player is already registered")
+            else:
                 self.tournament.register_player(
-                    chess_id, last_name, first_name, birthday, country, club_name
-                )
+                    chess_id, last_name, first_name, birthday, country, club_name)
             return True
         
+    def save_backup(data):
+        # Assurer que le répertoire existe
+        os.makedirs("resources", exist_ok=True)
+        with open("resources/resume_file.json", "w") as file:
+            json.dump(data, file, indent=4) 
     # Start the tournament and handle the rounds and matches.
-    def start_tournament(self):
+    def start_tournament(self, details = None):
         self.tournament.reset_rounds()
         self.tournament.set_total_nbr_rounds()
         # Iterate through each round
@@ -89,7 +79,7 @@ class TournamentController:
             for match in self.tournament.rounds[round].rnd_matches:
                 while True:
                     # Prompt the user for the match result
-                    ask_result = ask_match_result(match.player1,match.player2)
+                    ask_result = View.ask_match_result(match.player1,match.player2)
                     if ask_result == 1 or ask_result == 2 :
                         break
                     elif ask_result != 3:
@@ -107,8 +97,9 @@ class TournamentController:
                 print("the tournament winner is", winners[0].first_name)
                 break
             print("no final winner yet")
+        return True
 
-    def see_all_players(self):
+    def see_all_players(self,details = None):
         # Display all players from the clubs.json file.
         with open("resources/clubs.json", "r") as file:
             data = json.load(file)
@@ -136,7 +127,7 @@ class TournamentController:
                         longest_club_name = max(longest_club_name,len(club["club_name"]))
             all_players = dict(sorted(all_players.items()))
             # Display the players
-            report_ask = show_all_players(all_players)
+            report_ask = View.show_all_players(all_players)
             if report_ask.lower() == "y":
                 # Generate a report
                 report = []
@@ -149,9 +140,10 @@ class TournamentController:
                 with open("resources/reports/all_players_report.txt","w") as file:
                     file.writelines(report) 
                     print("report has been generated")
+        return True
                 
     # Display all tournaments and optionally generate a report.
-    def see_all_tournaments(self):
+    def see_all_tournaments(self, details = None):
         path = os.path.join("resources/tournaments", "*.json")
         file_names = glob.glob(path)
         # print(file_names)
@@ -162,11 +154,11 @@ class TournamentController:
                 tournaments.append(data)
         longest_t_name = longest_location = 0
         for tournament in tournaments:
-            show_all_tournaments(tournament)
+            View.show_all_tournaments(tournament)
             # Update the maximum lengths for formatting
             longest_t_name =max(longest_t_name,len(tournament["name"]))
             longest_location =max(longest_location,len(tournament["location"])) 
-        ask_report = ask_for_report()
+        ask_report = View.ask_for_report()
         if ask_report == "y":
             # Generate a report
             report = []
@@ -178,11 +170,12 @@ class TournamentController:
             with open("resources/reports/all_tournaments_report.txt","w") as file:
                 file.writelines(report) 
                 print("tournaments report has been generated")
+        return True
             
     # Search for a particular tournament and display its details.
-    def search_tournament(self):
+    def search_tournament(self,details = None):
         print(self.tournament)
-        ask_report = ask_for_report()
+        ask_report = View.ask_for_report()
         if ask_report == "y":
             # Generate a report
             report = []
@@ -193,9 +186,10 @@ class TournamentController:
             with open(f"resources/reports/{self.tournament.name}_report.txt","w") as file:
                 file.writelines(report) 
                 print(f"{self.tournament.name}'s report has been generated")
-                
+        return True
+    
     # Display all players registered in a particular tournament.
-    def show_tournament_players(self):
+    def show_tournament_players(self,details = None):
         players = self.tournament.registered_players
         all_players = {}
         player_details = {}
@@ -216,7 +210,7 @@ class TournamentController:
             longest_last_name = max(longest_last_name,len(player.last_name))
         all_players = dict(sorted(all_players.items()))
         # Display the players
-        report_ask = show_all_players(all_players)
+        report_ask = View.show_all_players(all_players)
         if report_ask.lower() == "y":
             # Generate a report
             report = []
@@ -229,21 +223,22 @@ class TournamentController:
             with open(f"resources/reports/reg_players_{self.tournament.name}_report.txt","w") as file:
                 file.writelines(report) 
                 print(f"{self.tournament.name}'s players report has been generated")
+        return True
         
     # Display all rounds and matches in the tournament.
-    def show_tournament_report(self):
+    def show_tournament_report(self, details = None):
         longest_first_name = longest_last_name = 0
         for round in self.tournament.rounds:
-            show_tournament_round(
+            View.show_tournament_round(
                 round.rnd_name, round.rnd_start_datetime, round.rnd_end_datetime
             )
             for match in round.rnd_matches:
-                show_round_matches(match.player1, match.player2)
+                View.show_round_matches(match.player1, match.player2)
                 # Update the maximum lengths for formatting
                 longest_first_name = max(longest_first_name,len(match.player1.first_name),len(match.player2.last_name))
                 longest_last_name = max(longest_last_name,len(match.player1.last_name),len(match.player2.last_name))
                 
-        ask_report = ask_for_report()
+        ask_report = View.ask_for_report()
         if ask_report.lower() == "y":
             # Generate a report
             report = []
@@ -256,3 +251,4 @@ class TournamentController:
             with open(f"resources/reports/rounds_&_matches_{self.tournament.name}_report.txt","w") as file:
                 file.writelines(report) 
                 print(f"{self.tournament.name}'s rounds and matches report has been generated")
+        return True
