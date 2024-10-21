@@ -56,6 +56,9 @@ class TournamentController:
             # Save the current state to resume later from P4\utils\report_util.py
             self.save_backup(details)
             return False
+        elif:
+            
+        
         else:
             if details["chess_id"] in self.tournament.get_reg_player_ids():
                 print("Player is already registered")
