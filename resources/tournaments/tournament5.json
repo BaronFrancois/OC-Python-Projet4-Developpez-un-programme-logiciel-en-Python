@@ -7,5 +7,18 @@
     "number_of_rounds": 4,
     "current_round": 0,
     "rounds": [],
-    "registered_players": []
+    "registered_players": [
+        {
+            "national_chess_id": "EN67890",
+            "last_name": "Doe",
+            "first_name": "Jane",
+            "date_of_birth": "1990-05-14"
+        },
+        {
+            "national_chess_id": "IN12345",
+            "last_name": "Kumar",
+            "first_name": "Raj",
+            "date_of_birth": "1989-08-30"
+        }
+    ]
 }

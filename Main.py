@@ -66,6 +66,7 @@ def main():
             succes = func(details, user_input)
             if not succes:
                 break
+            # fix 
         else :
             print("please select a valid option:")
         details = None

@@ -1,0 +1,11 @@
+{
+    "name": "tmt_name",
+    "location": "tmt_location",
+    "start_date": "tmt_start_date",
+    "end_date": "tmt_end_date",
+    "description": "tmt_description",
+    "number_of_rounds": 4,
+    "current_round": 0,
+    "rounds": [],
+    "registered_players": []
+}

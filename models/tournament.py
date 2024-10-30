@@ -43,33 +43,78 @@ class Tournament:
             print("Tournament details saved successfully!")
 
     def load(self):
-        # Load tournament details from a JSON file
-        file_path = f"resources/tournaments/{self.name}.json"
-        if os.path.exists(file_path):
-            with open(file_path, "r") as file:
-                data = json.load(file)
-                self.location = data["location"]
-                self.start_date = data["start_date"]
-                self.end_date = data["end_date"]
-                self.description = data["description"]
-                self.number_of_rounds = data["number_of_rounds"]
-                self.current_round_number = data["current_round"]
-                self.registered_players = [self._dict_to_player(p) for p in data["registered_players"]]
-                self.rounds = [self._dict_to_round(r) for r in data["rounds"]]
-                self.current_players = self.registered_players.copy()
+        if os.path.exists(f"resources/tournaments/{self.name}.json"):
+            with open(f"resources/tournaments/{self.name}.json", "r") as file:
+                details = json.load(file)
+                self.name = details["name"]
+                self.location = details["location"]
+                self.start_date = details["start_date"]
+                self.end_date = details["end_date"]
+                self.number_of_rounds = details["number_of_rounds"]
+                self.current_round_number = details["current_round"]
+                self.rounds = []
+                #    self.registered_players = details["registered_players"]
+                # player is a dictionnary
+                # print("loading data")
+                for round in details["rounds"]:
+                    round_matches = []
+                    for match in round["rnd_matches"]:
+                        player1 = match[0]
+                        player2 = match[1]
+                        #    print(player1)
+                        #    print(player2)
+
+                        player1 = Player(
+                            player1["last_name"],
+                            player1["first_name"],
+                            player1["date_of_birth"],
+                            player1["national_chess_id"],
+                            player1["plyr_score"],
+                            player1["has_lost"],
+                        )
+
+                        player2 = Player(
+                            player2["last_name"],
+                            player2["first_name"],
+                            player2["date_of_birth"],
+                            player2["national_chess_id"],
+                            player2["plyr_score"],
+                            player2["has_lost"],
+                        )
+
+                        match = Match(player1, player2)
+                        round_matches.append(match)
+
+                    round = Round(
+                        round["rnd_name"],
+                        round["rnd_start_datetime"],
+                        round["rnd_end_datetime"],
+                        round_matches,
+                    )
+                    self.rounds.append(round)
+
+                for player in details["registered_players"]:
+                    new_player = Player(
+                        player["last_name"],
+                        player["first_name"],
+                        player["date_of_birth"],
+                        player["national_chess_id"],
+                    )
+                    self.registered_players.append(new_player)
+
+                self.description = details["description"]
             return True
         else:
             return False
 
-    def register_player(
-        self, chess_id, last_name, first_name, birthday, country, club_name):
-        is_verified_player = self.verify_player(chess_id, country, club_name)
-        if is_verified_player:
-            new_player = Player(last_name, first_name, birthday, chess_id)
-            self.registered_players.append(new_player)
-            self.add_player_to_file(new_player)
-        else:
-            print("player is not verified")
+    def register_player(self,details):
+        new_player = Player(details["last_name"],
+                            details["first_name"],
+                            details["birthday"],
+                            details["chess_id"]
+                            )
+        self.registered_players.append(new_player)
+        self.add_player_to_file(new_player)
 
     def verify_player(self, chess_id, country, club_name):
         with open("resources/clubs.json", "r") as file:

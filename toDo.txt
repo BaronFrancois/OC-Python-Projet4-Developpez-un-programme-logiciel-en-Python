@@ -51,5 +51,6 @@ Peut être les types ?
 quand on enregistre un joueur, quand on demande le nom du tournois -> s'il n'existe pas on devrait arreter l'enregistrement
 -check If Chess_id exists in club.json
 ----------------------------------------------------------------------------------
-19/10/2024
-Validate registrating personn
+26/10/2024
+def create_tournament(self, details = None): change it like registrer_player()
+# check if chess id pattern is correct (AB12345)

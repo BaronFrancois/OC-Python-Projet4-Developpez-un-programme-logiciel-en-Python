@@ -1,6 +1,8 @@
 from views.tournament_view import View
 from models.tournament import Tournament
 from utils.report_util import ReportUtil
+from utils.error_util import ErrorType, ResultType
+from models.club import Club
 import json
 import glob
 import os
@@ -21,31 +23,31 @@ class TournamentController:
             return False
         return True
 
-    def create_tournament(self, details = None):
+    def create_tournament(self, details = None, option_number = None):
         # Create a new tournament using user-provided details.
-        tmt_name, tmt_location, tmt_start_date, tmt_end_date, tmt_description = (
-            View.create_tournament_view(details)
-        )
-        # Check if the user wants to exit the creation process with pressing 0
-        if tmt_name == '0' or tmt_location == '0' or tmt_start_date == '0' or tmt_end_date == '0' or tmt_description == '0':
-            data = {"option_number":1,
-                    "tmt_name":tmt_name,
-                    "tmt_location":tmt_location,
-                    "tmt_start_date": tmt_start_date,
-                    "tmt_end_date": tmt_end_date,
-                    "tmt_description": tmt_description
-                    }
-            
-            # Save the current state to resume later from P4\utils\report_util.py
-            ReportUtil.save_resume_file(data)
-            return False
+        details = View.create_tournament(details)
+        if "0" in details.values():
+            details["option_number"] = option_number
+            details["tournament"] = self.tournament.name
+            self.save_backup(details)
+            return ResultType.PAUSED
+        
+        file_path = f'ressources/{details["tmt_name"]}.json'
+        if os.path.exists(file_path):
+            print("ERROR:",ErrorType.TMT_ALREADY_EXISTS )
+            return ResultType.ERROR 
         else:
-            # Create and save the tournament
             self.tournament = Tournament(
-                tmt_name, tmt_location, tmt_start_date, tmt_end_date, tmt_description
+                details["tmt_name"],
+                details["tmt_location"],
+                details["tmt_start_date"],
+                details["tmt_end_date"],
+                details["tmt_description"]
             )
             self.tournament.save()
-            return True
+            return ResultType.SUCCES 
+            
+        # Create and save the tournament
         
     # Register a player to the tournament.
     def register_player(self, details= None, option_number = None):
@@ -53,21 +55,25 @@ class TournamentController:
         if "0" in details.values():
             details["option_number"] = option_number
             details["tournament"] = self.tournament.name
-            # Save the current state to resume later from P4\utils\report_util.py
             self.save_backup(details)
-            return False
-        elif:
-            
+            return ResultType.PAUSED
         
-        else:
+        club_details = Club()
+        is_result_valid = club_details.check_valid_player(details)
+        if is_result_valid  == ErrorType.NO_ERROR:
             if details["chess_id"] in self.tournament.get_reg_player_ids():
                 print("Player is already registered")
             else:
-                self.tournament.register_player(
-                    chess_id, last_name, first_name, birthday, country, club_name)
-            return True
+                self.tournament.register_player(details)
+            return ResultType.SUCCES
+            
+        else:
+            print("ERROR:",is_result_valid)
+            return ResultType.ERROR
+            
         
-    def save_backup(data):
+        
+    def save_backup(self,data):
         # Assurer que le répertoire existe
         os.makedirs("resources", exist_ok=True)
         with open("resources/resume_file.json", "w") as file:
