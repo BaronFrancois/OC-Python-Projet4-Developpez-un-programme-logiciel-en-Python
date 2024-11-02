@@ -67,7 +67,18 @@ class Club:
                 else:
                     return ErrorType.PLAYER_FIRST_NAME_MISMATCH
             
-                
+    def flat_club_list(self):
+        flat_list = []
+        for club in self.clubs:
+            flat_list = flat_list + club
+        return flat_list
+    
+    def flat_player_ids(self):
+        flat_list = []
+        for fed_id in self.player_ids:
+            for club_id in fed_id:
+                flat_list = flat_list + club_id
+        return flat_list
 # club_details = Club()
 # print(club_details.player_ids)
 # details = {

@@ -54,3 +54,7 @@ quand on enregistre un joueur, quand on demande le nom du tournois -> s'il n'exi
 26/10/2024
 def create_tournament(self, details = None): change it like registrer_player()
 # check if chess id pattern is correct (AB12345)
+----------------------------------------------------------------------------------
+02/11/2024
+doing the header and row for report:
+We'll change the keys name of headers to the actuals keys name inside player dictionnary so that it would be usable without creating a new dictionnary.
