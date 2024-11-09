@@ -32,7 +32,7 @@ def test_init():
     assert tournament.end_date == end_date
     assert tournament.description == description
     assert tournament.number_of_rounds == number_of_rounds
-    assert tournament.current_round_number == 0
+    assert tournament.current_round == 0
     assert tournament.registered_players == []
     assert tournament.rounds == []
 
@@ -156,7 +156,7 @@ def test_generate_round():
     tournament.register_player("JP12345", "Taro", "Yamada","1992-07-10", "Asia", "Tokyo Chess Club")
     tournament.set_total_nbr_rounds()
     tournament.generate_round()
-    assert tournament.current_round_number == 1
+    assert tournament.current_round == 1
     round = tournament.rounds[0]
     assert round.rnd_name == "Round 1"
     assert len(round.rnd_matches) == 2

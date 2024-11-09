@@ -3,11 +3,17 @@ from models.match import Match
 
 
 class Round:
-    def __init__ (self, rnd_name, rnd_start_datetime, rnd_end_datetime=None,rnd_matches= [] ):
+    def __init__ (self, rnd_name, rnd_start_datetime, rnd_end_datetime=None,rnd_matches= [], dictionary = None ):
         self.rnd_name = rnd_name
         self.rnd_start_datetime = rnd_start_datetime
         self.rnd_end_datetime = rnd_end_datetime
         self.rnd_matches = rnd_matches
+        if dictionary:
+            self.__set_attributes(dictionary)
+            
+    def __set_attributes(self,dictionary):
+        for key,value in dictionary.items():
+            setattr(self,key,value)
 
     def set_matches (self,players, current_round_number):
         self.rnd_matches= []

@@ -23,28 +23,35 @@ class TournamentController:
             self.tournament = None
             return False
         return True
-
+    
+    def remove_option_and_tournament(self, details):
+        if details and "option_number" in details:
+            details.pop("option_number")
+        if details and "tournament" in details:
+            details.pop("tournament")
+        return details
+    
+    def pause(self,option_number,details):
+        details["option_number"] = option_number
+        if self.tournament:
+            details["tournament"] = self.tournament.name
+        self.save_backup(details)
+        
     def create_tournament(self, details = None, option_number = None):
         # Create a new tournament using user-provided details.
+        details = self.remove_option_and_tournament(details)
         details = View.create_tournament(details)
         if "0" in details.values():
-            details["option_number"] = option_number
-            details["tournament"] = self.tournament.name
-            self.save_backup(details)
+            self.pause(option_number, details)
             return ResultType.PAUSED
         
-        file_path = f'resources/tournaments/{details["tmt_name"]}.json'
+        file_path = f'resources/tournaments/{details["name"]}.json'
         if os.path.exists(file_path):
             print("ERROR:",ErrorType.TMT_ALREADY_EXISTS )
             return ResultType.ERROR 
         else:
-            self.tournament = Tournament(
-                details["tmt_name"],
-                details["tmt_location"],
-                details["tmt_start_date"],
-                details["tmt_end_date"],
-                details["tmt_description"]
-            )
+            self.tournament = Tournament(dictionary = details)
+            print(self.tournament.name, self.tournament.location)
             self.tournament.save()
             return ResultType.SUCCES 
             
@@ -53,16 +60,15 @@ class TournamentController:
     # Register a player to the tournament.
         
     def register_player(self, details= None, option_number = None):
+        details = self.remove_option_and_tournament(details)
         details = View.register_player(details)
         if "0" in details.values():
-            details["option_number"] = option_number
-            details["tournament"] = self.tournament.name
-            self.save_backup(details)
+            self.pause(option_number, details)
             return ResultType.PAUSED
         
         is_result_valid = self.club_details.check_valid_player(details)
         if is_result_valid  == ErrorType.NO_ERROR:
-            if details["chess_id"] in self.tournament.get_reg_player_ids():
+            if details["national_chess_id"] in self.tournament.get_reg_player_ids():
                 print("Player is already registered")
             else:
                 self.tournament.register_player(details)
@@ -108,93 +114,71 @@ class TournamentController:
                 break
             print("no final winner yet")
         return True
-    def find_longest(self,my_list,max_rule):
-        longest_str = max(my_list,key=max_rule)
+    def find_longest(self,players,attribute =None):
+        def get_attribute_len(player):
+            value = getattr(player,attribute)
+            lenght = len(value)
+            return lenght
+        longest_player_object = max(players,key=get_attribute_len)
+        value = getattr(longest_player_object,attribute)
+        longest_str = max(len(value),len(attribute))
         return longest_str
-    def see_all_players(self,details = None, option_number = None):
-        longest_fed_name = len(self.find_longest(self.club_details.federations,len))
-        longest_club_name = len(self.find_longest(self.club_details.flat_club_list(),len))
-        # length of item fist_name is returning a dictionnary because of the nature of player's list (is a dictionnary too)
-        longest_first_name = self.find_longest(self.club_details.players,lambda item: len(item["first_name"]))
-        longest_first_name = len(longest_first_name["first_name"])
-        longest_last_name = self.find_longest(self.club_details.players,lambda item: len(item["last_name"]))
-        longest_last_name =len(longest_last_name["last_name"])
-        print(longest_fed_name)
-        print(longest_first_name)
-        print(longest_last_name)
-        print(longest_club_name)
-        
-        headers = {"Chess Id": 8,
-                   "LN":longest_last_name,
-                   "FN" : longest_first_name,
-                   "FED":longest_fed_name,
-                   "CLUB":longest_club_name
-                   }
+    def add_report_headings(self,headers):
         report = []
         row = "" 
         for header, spacing in headers.items():
+            header = header.replace("_"," ").title()
             row += f" | {header:<{spacing}}"
         row += " |"
-        print(row)
+        report.append(row)
         row = ""
         for header, spacing in headers.items():
             row += f" | {"_"*spacing}"
         row += " |"
-        print(row)   
-        row = ""
-        fed = self.club_details.federations[0]
-        country = self.club_details.countries[0]
-        club = self.club_details.clubs[0][0]
-        chess_id = self.club_details.player_ids[0][0][0]
-        print(fed,country,club,chess_id)
-        i = self.club_details.flat_player_ids().index(chess_id)
-        player = self.club_details.players[i]
+        report.append(row)
+        return report  
+    def sort_players(self,players,attribute):
+        def get_attribute(player):
+            value = getattr(player,attribute)
+            return value
+        sorted_players = sorted(players,key=get_attribute)
+        return sorted_players
+    def save_report_to_txt(self,report,file_name):
+        with open(f"resources/reports/{file_name}.txt","w") as file:
+            for line in report:
+                file.write(line+"\n")
+            print("report has been generated")
+    def show_all_clubs_players(self,details = None, option_number = None):
+        return self.show_all_players(self.club_details.players)
+    def show_all_players(self,players):
+        sorted_players = self.sort_players(players, attribute = "last_name")
+        headers = {"national_chess_id": None,
+                   "last_name":None,
+                   "first_name" : None,
+                   "federation":None,
+                   "club_name":None
+                   }
+        for header in headers:
+            headers[header] = self.find_longest(self.club_details.players,attribute = header)
+        print(headers)
         
-        # Display all players from the clubs.json file.
-        # with open("resources/clubs.json", "r") as file:
-        #     data = json.load(file)
-        #     all_players = {}
-        #     player_details = {}
-        #     longest_first_name = longest_last_name = longest_fed_name = longest_club_name = 0
-        #     # Iterate through federations, clubs, and players to collect data
-        #     for federation in data["federations"]:
-        #         for club in federation["clubs"]:
-        #             for player in club["players"]:
-        #                 key = f"{player['last_name']} {player['first_name']}"
-        #                 value = f"{player['national_chess_id']}"
-        #                 all_players[key] = value
-        #                 player_details[key] = [
-        #                     player['national_chess_id'],
-        #                     player['last_name'],
-        #                     player['first_name'],
-        #                     federation["name"],
-        #                     club["club_name"]
-        #                 ]
-        #                 # Update the maximum lengths for formatting
-        #                 longest_first_name = max(longest_first_name,len(player["first_name"]))
-        #                 longest_last_name = max(longest_last_name,len(player["last_name"]))
-        #                 longest_fed_name = max(longest_fed_name,len(federation["name"]))
-        #                 longest_club_name = max(longest_club_name,len(club["club_name"]))
+        report = self.add_report_headings(headers)
+        # print(report)
+        for player in sorted_players:
+            row = "" 
+            for header, spacing in headers.items():
+                value = getattr(player,header)
+                row += f" | {value:<{spacing}}"
+            row += " |"
+            report.append(row)
+        View.show_report(report)
+        save_report = View.ask_for_report()
+        if save_report:
+            self.save_report_to_txt(report,file_name = "all_players_report")
+        return ResultType.SUCCES 
         
-        #     all_players = dict(sorted(all_players.items()))
-        #     # Display the players
-        #     report_ask = View.show_all_players(all_players)
-        #     if report_ask.lower() == "y":
-        #         # Generate a report
-        #         report = []
-        #         report.append(f'| Chess Id | {"LN":<{longest_last_name}} | {"FN":<{longest_first_name}} | {"FED":<{longest_fed_name}} | {"CLUB":<{longest_club_name}} | \n')
-        #         report.append(f'| ________ | {"_"*(longest_last_name)} | {"_"*(longest_first_name)} | {"_"*(longest_fed_name)} | {"_"*(longest_club_name)} | \n')
-        #         for name in all_players:
-        #             player = player_details[name]
-        #             report.append(f'| {player[0]:<8} | {player[1]:<{longest_last_name}} | {player[2]:<{longest_first_name}} | {player[3]:<{longest_fed_name}} | {player[4]:<{longest_club_name}} |\n')
-        #             # Write the report to a file
-        #         with open("resources/reports/all_players_report.txt","w") as file:
-        #             file.writelines(report) 
-        #             print("report has been generated")
-        # return True
-                
     # Display all tournaments and optionally generate a report.
-    def see_all_tournaments(self, details = None):
+    def show_all_tournaments(self, details = None):
         path = os.path.join("resources/tournaments", "*.json")
         file_names = glob.glob(path)
         # print(file_names)
@@ -240,41 +224,42 @@ class TournamentController:
         return True
     
     # Display all players registered in a particular tournament.
-    def show_tournament_players(self,details = None):
-        players = self.tournament.registered_players
-        all_players = {}
-        player_details = {}
-        longest_first_name = longest_last_name = 0
-        # print(players)
-        for player in players:
-            key = f"{player.last_name} {player.first_name}"
-            value = f"{player.national_chess_id}"
-            all_players[key] = value
-            player_details[key] = [
-                player.national_chess_id,
-                player.last_name,
-                player.first_name,
-                player.date_of_birth
-                ]
-            # Update the maximum lengths for formatting
-            longest_first_name = max(longest_first_name,len(player.first_name))
-            longest_last_name = max(longest_last_name,len(player.last_name))
-        all_players = dict(sorted(all_players.items()))
-        # Display the players
-        report_ask = View.show_all_players(all_players)
-        if report_ask.lower() == "y":
-            # Generate a report
-            report = []
-            report.append(f'| Chess Id | {"LN":<{longest_last_name}} | {"FN":{longest_first_name}} | {"DOB":<{10}} | \n')
-            report.append(f'| ________ | {"_"*(longest_last_name)} | {"_"*(longest_first_name)} | {"_"*(10)} | \n')
-            for name in all_players:
-                player = player_details[name]
-                report.append(f'| {player[0]:<8} | {player[1]:{longest_last_name}} | {player[2]:<{longest_first_name}} | {player[3]:<{10}} |\n')
-            # Write the report to a file
-            with open(f"resources/reports/reg_players_{self.tournament.name}_report.txt","w") as file:
-                file.writelines(report) 
-                print(f"{self.tournament.name}'s players report has been generated")
-        return True
+    def show_tournament_players(self,details = None, option_number = None):
+        return self.show_all_players(self.tournament.registered_players)
+        # players = self.tournament.registered_players
+        # all_players = {}
+        # player_details = {}
+        # longest_first_name = longest_last_name = 0
+        # # print(players)
+        # for player in players:
+        #     key = f"{player.last_name} {player.first_name}"
+        #     value = f"{player.national_chess_id}"
+        #     all_players[key] = value
+        #     player_details[key] = [
+        #         player.national_chess_id,
+        #         player.last_name,
+        #         player.first_name,
+        #         player.date_of_birth
+        #         ]
+        #     # Update the maximum lengths for formatting
+        #     longest_first_name = max(longest_first_name,len(player.first_name))
+        #     longest_last_name = max(longest_last_name,len(player.last_name))
+        # all_players = dict(sorted(all_players.items()))
+        # # Display the players
+        # report_ask = View.show_all_players(all_players)
+        # if report_ask.lower() == "y":
+        #     # Generate a report
+        #     report = []
+        #     report.append(f'| Chess Id | {"LN":<{longest_last_name}} | {"FN":{longest_first_name}} | {"DOB":<{10}} | \n')
+        #     report.append(f'| ________ | {"_"*(longest_last_name)} | {"_"*(longest_first_name)} | {"_"*(10)} | \n')
+        #     for name in all_players:
+        #         player = player_details[name]
+        #         report.append(f'| {player[0]:<8} | {player[1]:{longest_last_name}} | {player[2]:<{longest_first_name}} | {player[3]:<{10}} |\n')
+        #     # Write the report to a file
+        #     with open(f"resources/reports/reg_players_{self.tournament.name}_report.txt","w") as file:
+        #         file.writelines(report) 
+        #         print(f"{self.tournament.name}'s players report has been generated")
+        # return True
         
     # Display all rounds and matches in the tournament.
     def show_tournament_report(self, details = None):

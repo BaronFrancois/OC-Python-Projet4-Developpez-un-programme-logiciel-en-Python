@@ -6,12 +6,13 @@ class View:
     def register_player(details = {}):
         if not details:
             details = {
+                    "federation":None,
                     "country":None,
                     "club_name": None,
-                    "chess_id": None,
+                    "national_chess_id": None,
                     "last_name": None,
                     "first_name": None,
-                    "birthday":None
+                    "date_of_birth":None
                     }
         for key,value in details.items():
             # print(key,value)
@@ -36,11 +37,11 @@ class View:
     def create_tournament(details = {}):
         if not details:
             details = {
-                    "tmt_name":None,
-                    "tmt_location": None,
-                    "tmt_start_date": None,
-                    "tmt_end_date": None,
-                    "tmt_description": None
+                    "name":None,
+                    "location": None,
+                    "start_date": None,
+                    "end_date": None,
+                    "description": None
                     }
         for key,value in details.items():
             # print(key,value)
@@ -124,6 +125,11 @@ class View:
             print(f"Chess ID: {chess_id},\t\tName: {name}")
         report_ask = input("Do you want to save the players inside the report ?  Y/N :")
         return report_ask
+    
+    @staticmethod
+    def show_report(report):
+        for line in report:
+            print(line)
 
 
     @staticmethod
@@ -135,7 +141,10 @@ class View:
     @staticmethod
     def ask_for_report():
         ask_report = input("Do you want to save the report ? y/n :")
-        return ask_report.lower()
+        if ask_report.lower() == "y":
+            return True
+        else:
+            return False
 
     @staticmethod
     def show_tournament_round(round_name, start_date_time, end_date_time):

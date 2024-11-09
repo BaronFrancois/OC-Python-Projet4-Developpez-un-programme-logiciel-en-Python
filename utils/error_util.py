@@ -8,6 +8,7 @@ class ErrorType:
     PLAYER_FIRST_NAME_MISMATCH = "The Player First name is not matching"
     PLAYER_LAST_NAME_MISMATCH = "The Player Last name is not matching"
     PLAYER_BIRTHDAY_MISMATCH = "The Player Birthday is not matching"
+    PLAYER_FED_MISMATCH = "The player's federation is not matching"
     NO_ERROR = "No error found"
     
     TMT_ALREADY_EXISTS = "The tournament already exists"

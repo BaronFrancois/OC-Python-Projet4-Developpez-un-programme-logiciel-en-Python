@@ -31,8 +31,8 @@ def main():
     details = resume_app()
     options = {
                 1:'create_tournament',
-                2:'see_all_players',
-                3:'see_all_tournaments',
+                2:'show_all_club_players',
+                3:'show_all_tournaments',
                 4:'register_player',
                 5:'start_tournament',
                 6:'search_tournament',
