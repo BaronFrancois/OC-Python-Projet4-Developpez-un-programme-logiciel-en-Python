@@ -1,0 +1,12 @@
+ | Name              | Location     | Start Date     | End Date     | Description                            |
+ | _________________ | ____________ | ______________ | ____________ | ______________________________________ |
+ | New_tournament    | paris        | 29/08/2024     | 29/08/2024   | test for new folder location           |
+ | tmt_name          | tmt_location | tmt_start_date | tmt_end_date | tmt_description                        |
+ | London chess test | london       | 28/08/2024     | 28/08/2024   | this is a test                         |
+ | tournament3       | paris        | 28/09/2024     | 28/09/2024   | Test for adding input scores           |
+ | tournament3       | paris        | 28/09/2024     | 28/09/2024   | Test for adding input scores           |
+ | tournament4       | paris        | 14/10/2024     | 14/10/2024   | description                            |
+ | tournament5       | âris         | 15/10/2024     | 15/10/2024   | des                                    |
+ | tournament6       | Europe       | 30/10/2024     | 30/10/2024   | description                            |
+ | tournament7       | Paris        | 11/11/2024     | 11/11/2024   | description                            |
+ | tournament_test   | france       | 21/09/2024     | 21/09/2024   | testing the create tournament function |

@@ -24,7 +24,7 @@ class Tournament:
     def __set_attributes (self, dictionary):
         for key, value in dictionary.items():
             setattr(self, key, value)
-            print(key, value)
+            # print(key, value)
    
     def __str__(self):
         # Return a string representation of the tournament
@@ -54,6 +54,7 @@ class Tournament:
                 details = json.load(file)
                 self.__set_attributes(details)
                 self.rounds = []
+                self.registered_players = []
                 for round in details["rounds"]:
                     round_matches = []
                     for match in round["rnd_matches"]:
@@ -70,8 +71,12 @@ class Tournament:
                     round["rnd_matches"] = round_matches
                     round = Round(dictionary = round)
                     self.rounds.append(round)
-
+                # print("details",details["registered_players"])
+                # print("len",len(details["registered_players"]))
+                # print("datatype",type(details["registered_players"][0]))
                 for player in details["registered_players"]:
+                    # print("///")
+                    # print(player)
                     new_player = Player(dictionary = player)
                     self.registered_players.append(new_player)
             return True

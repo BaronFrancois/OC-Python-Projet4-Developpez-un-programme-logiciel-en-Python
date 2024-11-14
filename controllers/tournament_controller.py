@@ -114,13 +114,13 @@ class TournamentController:
                 break
             print("no final winner yet")
         return True
-    def find_longest(self,players,attribute =None):
-        def get_attribute_len(player):
-            value = getattr(player,attribute)
+    def find_longest(self,object_list,attribute =None):
+        def get_attribute_len(obj):
+            value = getattr(obj,attribute)
             lenght = len(value)
             return lenght
-        longest_player_object = max(players,key=get_attribute_len)
-        value = getattr(longest_player_object,attribute)
+        longest_object = max(object_list,key=get_attribute_len)
+        value = getattr(longest_object,attribute)
         longest_str = max(len(value),len(attribute))
         return longest_str
     def add_report_headings(self,headers):
@@ -149,8 +149,8 @@ class TournamentController:
                 file.write(line+"\n")
             print("report has been generated")
     def show_all_clubs_players(self,details = None, option_number = None):
-        return self.show_all_players(self.club_details.players)
-    def show_all_players(self,players):
+        return self.show_all_players(self.club_details.players,"all_players_report")
+    def show_all_players(self,players,file_name):
         sorted_players = self.sort_players(players, attribute = "last_name")
         headers = {"national_chess_id": None,
                    "last_name":None,
@@ -159,8 +159,8 @@ class TournamentController:
                    "club_name":None
                    }
         for header in headers:
-            headers[header] = self.find_longest(self.club_details.players,attribute = header)
-        print(headers)
+            headers[header] = self.find_longest(players,attribute = header)
+        # print(headers)
         
         report = self.add_report_headings(headers)
         # print(report)
@@ -174,41 +174,71 @@ class TournamentController:
         View.show_report(report)
         save_report = View.ask_for_report()
         if save_report:
-            self.save_report_to_txt(report,file_name = "all_players_report")
+            self.save_report_to_txt(report,file_name = file_name)
         return ResultType.SUCCES 
         
     # Display all tournaments and optionally generate a report.
-    def show_all_tournaments(self, details = None):
+    def show_all_tournaments(self, details = None, option_number = None):
         path = os.path.join("resources/tournaments", "*.json")
         file_names = glob.glob(path)
         # print(file_names)
         tournaments = []
         for file_name in file_names:
-            with open(file_name) as file:
-                data = json.load(file)
-                tournaments.append(data)
-        longest_t_name = longest_location = 0
+            file_name = file_name.replace("resources/tournaments\\", "").replace(".json", "")
+            # print(file_name)
+            self.load(file_name)
+            tournaments.append(self.tournament)
+        headers = {"name": None,
+                    "location": None,
+                    "start_date": None,
+                    "end_date": None,
+                    "description":None,
+                    # "number_of_rounds":None
+                   }
+        for header in headers:
+            headers[header] = self.find_longest(tournaments,attribute = header)
+        # print(headers)
+        
+        report = self.add_report_headings(headers)
+        
         for tournament in tournaments:
-            View.show_all_tournaments(tournament)
-            # Update the maximum lengths for formatting
-            longest_t_name =max(longest_t_name,len(tournament["name"]))
-            longest_location =max(longest_location,len(tournament["location"])) 
-        ask_report = View.ask_for_report()
-        if ask_report == "y":
-            # Generate a report
-            report = []
-            report.append(f'| {"TName":<{longest_t_name}} | {"Location":<{max(longest_location,8)}} | {"Start date":<10} | {"End date":<10} | \n')
-            report.append(f'| {"_"*(longest_t_name)} | {"_"*(max(longest_location,8))} | {"_"*10} | {"_"*10} | \n')
-            for tournament in tournaments:
-                report.append(f'| {tournament["name"]:<{longest_t_name}} | {tournament["location"]:<{max(longest_location,8)}} | {tournament["start_date"]:<10} | {tournament["end_date"]:<10} |\n')
-                # Write the report to a file
-            with open("resources/reports/all_tournaments_report.txt","w") as file:
-                file.writelines(report) 
-                print("tournaments report has been generated")
-        return True
+            row = "" 
+            for header, spacing in headers.items():
+                value = getattr(tournament,header)
+                row += f" | {value:<{spacing}}"
+            row += " |"
+            report.append(row)
+        View.show_report(report)
+        save_report = View.ask_for_report()
+        if save_report:
+            self.save_report_to_txt(report,file_name = "all_tournament_report")
+        return ResultType.SUCCES 
+        # print(report)
+            # with open(file_name) as file:
+            #     data = json.load(file)
+            #     tournaments.append(data)
+        # longest_t_name = longest_location = 0
+        # for tournament in tournaments:
+        #     View.show_all_tournaments(tournament)
+        #     # Update the maximum lengths for formatting
+        #     longest_t_name =max(longest_t_name,len(tournament["name"]))
+        #     longest_location =max(longest_location,len(tournament["location"])) 
+        # ask_report = View.ask_for_report()
+        # if ask_report == "y":
+        #     # Generate a report
+        #     report = []
+        #     report.append(f'| {"TName":<{longest_t_name}} | {"Location":<{max(longest_location,8)}} | {"Start date":<10} | {"End date":<10} | \n')
+        #     report.append(f'| {"_"*(longest_t_name)} | {"_"*(max(longest_location,8))} | {"_"*10} | {"_"*10} | \n')
+        #     for tournament in tournaments:
+        #         report.append(f'| {tournament["name"]:<{longest_t_name}} | {tournament["location"]:<{max(longest_location,8)}} | {tournament["start_date"]:<10} | {tournament["end_date"]:<10} |\n')
+        #         # Write the report to a file
+        #     with open("resources/reports/all_tournaments_report.txt","w") as file:
+        #         file.writelines(report) 
+        #         print("tournaments report has been generated")
+        # return True
             
     # Search for a particular tournament and display its details.
-    def search_tournament(self,details = None):
+    def search_tournament(self,details = None, option_number = None):
         print(self.tournament)
         ask_report = View.ask_for_report()
         if ask_report == "y":
@@ -225,7 +255,8 @@ class TournamentController:
     
     # Display all players registered in a particular tournament.
     def show_tournament_players(self,details = None, option_number = None):
-        return self.show_all_players(self.tournament.registered_players)
+        file_name = f"{self.tournament.name}_reg_players_report"
+        return self.show_all_players(self.tournament.registered_players,file_name)
         # players = self.tournament.registered_players
         # all_players = {}
         # player_details = {}

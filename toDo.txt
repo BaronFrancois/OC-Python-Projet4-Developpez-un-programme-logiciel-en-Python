@@ -66,9 +66,9 @@ sort by alphabetical order for players in tournament_controller.show_tournament_
 08/11/2024
 Into the json file (tournament6) the registered player has less details:
 federation, country and club_name
-
 ----------------------------------------------------------------------------------
-11/11/2024
+done 1,2,4,7
+----------------------------------------------------------------------------------
+15/11/2024
+Check for the tournaments report save
 
-  File "h:\0Openclassrooms\python\ProjetsOC\P4\models\tournament.py", line 75, in load
-    new_player = Player(dictionary = player)

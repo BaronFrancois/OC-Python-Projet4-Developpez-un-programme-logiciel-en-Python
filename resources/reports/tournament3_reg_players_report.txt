@@ -1,0 +1,6 @@
+ | National Chess Id | Last Name | First Name | Federation                | Club Name              |
+ | _________________ | _________ | __________ | _________________________ | ______________________ |
+ | EN12345           | Doe       | John       | European Chess Federation | London Chess Club      |
+ | FR12345           | Dupont    | Pierre     | European Chess Federation | Paris Chess Club       |
+ | EN67890           | Smith     | Jane       | European Chess Federation | London Chess Club      |
+ | JP12345           | Yamada    | Taro       | Asian Chess Federation    | Tokyo Chess Club       |

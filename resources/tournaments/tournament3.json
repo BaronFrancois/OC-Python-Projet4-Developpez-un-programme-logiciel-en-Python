@@ -18,7 +18,10 @@
                         "date_of_birth": "1990-05-14",
                         "national_chess_id": "EN12345",
                         "plyr_score": 1,
-                        "has_lost": false
+                        "has_lost": false,
+                        "federation": "European Chess Federation",
+                        "country": "Europe",
+                        "club_name": "London Chess Club"
                     },
                     {
                         "last_name": "Dupont",
@@ -26,7 +29,10 @@
                         "date_of_birth": "1985-03-08",
                         "national_chess_id": "FR12345",
                         "plyr_score": 0,
-                        "has_lost": true
+                        "has_lost": true,
+                        "federation": "European Chess Federation",
+                        "country": "Europe",
+                        "club_name": "Paris Chess Club"
                     }
                 ],
                 [
@@ -36,7 +42,10 @@
                         "date_of_birth": "1988-11-20",
                         "national_chess_id": "EN67890",
                         "plyr_score": 1,
-                        "has_lost": false
+                        "has_lost": false,
+                        "federation": "European Chess Federation",
+                        "country": "Europe",
+                        "club_name": "London Chess Club"
                     },
                     {
                         "last_name": "Yamada",
@@ -44,7 +53,10 @@
                         "date_of_birth": "1992-07-10",
                         "national_chess_id": "JP12345",
                         "plyr_score": 0,
-                        "has_lost": true
+                        "has_lost": true,
+                        "federation": "Asian Chess Federation",
+                        "country": "Asia",
+                        "club_name": "Tokyo Chess Club"
                     }
                 ]
             ]
@@ -60,8 +72,11 @@
                         "first_name": "John",
                         "date_of_birth": "1990-05-14",
                         "national_chess_id": "EN12345",
-                        "plyr_score": 2,
-                        "has_lost": false
+                        "plyr_score": 1,
+                        "has_lost": false,
+                        "federation": "European Chess Federation",
+                        "country": "Europe",
+                        "club_name": "London Chess Club"
                     },
                     {
                         "last_name": "Smith",
@@ -69,7 +84,10 @@
                         "date_of_birth": "1988-11-20",
                         "national_chess_id": "EN67890",
                         "plyr_score": 1,
-                        "has_lost": true
+                        "has_lost": false,
+                        "federation": "European Chess Federation",
+                        "country": "Europe",
+                        "club_name": "London Chess Club"
                     }
                 ]
             ]
@@ -77,28 +95,48 @@
     ],
     "registered_players": [
         {
-            "national_chess_id": "EN12345",
             "last_name": "Doe",
-            "first_name": "John",
-            "date_of_birth": "1990-05-14"
+                        "first_name": "John",
+                        "date_of_birth": "1990-05-14",
+                        "national_chess_id": "EN12345",
+                        "plyr_score": 1,
+                        "has_lost": false,
+                        "federation": "European Chess Federation",
+                        "country": "Europe",
+                        "club_name": "London Chess Club"
         },
         {
-            "first_name": "Jane",
             "last_name": "Smith",
-            "date_of_birth": "1988-11-20",
-            "national_chess_id": "EN67890"
+                        "first_name": "Jane",
+                        "date_of_birth": "1988-11-20",
+                        "national_chess_id": "EN67890",
+                        "plyr_score": 1,
+                        "has_lost": false,
+                        "federation": "European Chess Federation",
+                        "country": "Europe",
+                        "club_name": "London Chess Club"
         },
         {
-            "first_name": "Pierre",
             "last_name": "Dupont",
-            "date_of_birth": "1985-03-08",
-            "national_chess_id": "FR12345"
+                        "first_name": "Pierre",
+                        "date_of_birth": "1985-03-08",
+                        "national_chess_id": "FR12345",
+                        "plyr_score": 0,
+                        "has_lost": true,
+                        "federation": "European Chess Federation",
+                        "country": "Europe",
+                        "club_name": "Paris Chess Club"
         },
         {
-            "first_name": "Taro",
             "last_name": "Yamada",
-            "date_of_birth": "1992-07-10",
-            "national_chess_id": "JP12345"
+                        "first_name": "Taro",
+                        "date_of_birth": "1992-07-10",
+                        "national_chess_id": "JP12345",
+                        "plyr_score": 0,
+                        "has_lost": true,
+                        "federation": "Asian Chess Federation",
+                        "country": "Asia",
+                        "club_name": "Tokyo Chess Club"
         }
     ],
     "description": "Test for adding input scores"
