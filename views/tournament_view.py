@@ -65,8 +65,13 @@ class View:
     def show_report(report):
         for line in report:
             print(line)
-
-
+            
+    @staticmethod
+    def show_winner(winners):
+        # convert if statement into view
+        print("final winner decided") 
+        print("the tournament winner is", winners[0].first_name)
+        
     @staticmethod
     def show_all_tournaments(tournament):
         

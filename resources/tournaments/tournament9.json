@@ -2,22 +2,22 @@
     "name": "tournament9",
     "location": "paris",
     "start_date": "21/11/2024",
-    "end_date": "2024-11-25 14:29:12",
+    "end_date": "2024-11-25 19:58:56",
     "description": "description",
     "number_of_rounds": 1,
     "current_round": 1,
     "rounds": [
         {
             "rnd_name": "Round 1",
-            "rnd_start_datetime": "2024-11-24 14:29:12",
-            "rnd_end_datetime": "2024-11-25 14:29:12",
+            "rnd_start_datetime": "2024-11-24 19:58:56",
+            "rnd_end_datetime": "2024-11-25 19:58:56",
             "rnd_matches": [
                 [
                     {
-                        "last_name": "Doe",
-                        "first_name": "John",
-                        "date_of_birth": "1990-05-14",
-                        "national_chess_id": "EN12345",
+                        "last_name": "Smith",
+                        "first_name": "Jane",
+                        "date_of_birth": "1988-11-20",
+                        "national_chess_id": "EN67890",
                         "federation": "European Chess Federation",
                         "country": "Europe",
                         "club_name": "London Chess Club",
@@ -25,10 +25,10 @@
                         "has_lost": false
                     },
                     {
-                        "last_name": "Smith",
-                        "first_name": "Jane",
-                        "date_of_birth": "1988-11-20",
-                        "national_chess_id": "EN67890",
+                        "last_name": "Doe",
+                        "first_name": "John",
+                        "date_of_birth": "1990-05-14",
+                        "national_chess_id": "EN12345",
                         "federation": "European Chess Federation",
                         "country": "Europe",
                         "club_name": "London Chess Club",

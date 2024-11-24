@@ -107,9 +107,7 @@ class TournamentController:
             number_of_winners, winners = self.tournament.start_round()
             # self.tournament.add_rounds_to_file()
             if number_of_winners == 1:
-                # convert if statement into view
-                print("final winner decided") 
-                print("the tournament winner is", winners[0].first_name)
+                View.show_winner(winners)
                 break
             print("no final winner yet")
         return True
