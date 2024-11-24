@@ -40,7 +40,7 @@ class View:
                     "name":None,
                     "location": None,
                     "start_date": None,
-                    "end_date": None,
+                    # "end_date": None,
                     "description": None
                     }
         for key,value in details.items():
@@ -52,73 +52,8 @@ class View:
                     # for loop break
             else:
                 print(f'enter {key.replace("_", " ")} or press "0" to quit :{value}')
-        return details
-        # if details:
-        #     tmt_name = details["tmt_name"]
-        #     tmt_location = details["tmt_location"]
-        #     tmt_start_date = details["tmt_start_date"]
-        #     tmt_end_date = details["tmt_end_date"]
-        #     tmt_description = details["tmt_description"] 
-        # else:
-        #     tmt_name = tmt_location = tmt_start_date = tmt_end_date = tmt_description = None
-            
-        # if not tmt_name:
-        #     tmt_name = input("Enter the tournament name (or press '0' to quit): ")
-        # else:
-        #     print(f"Enter the tournament name (or press '0' to quit): {tmt_name}")
+        return details  
         
-        # if tmt_name and tmt_name != '0':
-        #     print(f"Tournament Name: {tmt_name}")
-
-            
-        #     if not tmt_location:
-        #         tmt_location = input("Enter the tournament location (or press '0' to quit): ")
-        #     else:
-        #         print(f"Enter the tournament location (or press '0' to quit): {tmt_location}")
-
-        #     if tmt_location and tmt_location != '0':
-        #         print(f"Tournament Location: {tmt_location}")
-
-                
-        #         if not tmt_start_date:
-        #             tmt_start_date = input("Enter the tournament start date (or press '0' to quit): ")
-        #         else:
-        #             print(f"Enter the tournament start date (or press '0' to quit): {tmt_start_date}")
-
-        #         if tmt_start_date and tmt_start_date != '0':
-        #             print(f"Tournament Start Date: {tmt_start_date}")
-
-                    
-        #             if not tmt_end_date:
-        #                 tmt_end_date = input("Enter the tournament end date (or press '0' to quit): ")
-        #             else:
-        #                 print(f"Enter the tournament end date (or press '0' to quit): {tmt_end_date}")
-
-        #             if tmt_end_date and tmt_end_date != '0':
-        #                 print(f"Tournament End Date: {tmt_end_date}")
-
-                        
-        #                 if not tmt_description:
-        #                     tmt_description = input("Enter the tournament description (or press '0' to quit): ")
-        #                 else:
-        #                     print(f"Enter the tournament description (or press '0' to quit): {tmt_description}")
-
-        #                 if tmt_description and tmt_description != '0':
-        #                     print(f"Tournament Description: {tmt_description}")
-
-        
-        # if tmt_name == '0' or tmt_location == '0' or tmt_start_date == '0' or tmt_end_date == '0' or tmt_description == '0':
-        #     print("Tournament creation process exited.")
-        # else:
-        #     print("Tournament created successfully.")
-        
-        # return (tmt_name, tmt_location, tmt_start_date, tmt_end_date, tmt_description)
-
-        
-        
-
-
-
     @staticmethod
     def show_all_players(players):
         for name, chess_id in players.items():
@@ -164,21 +99,28 @@ class View:
         
     @staticmethod
     def ask_match_result(player1, player2):
-        print(player1.first_name,"///VS///" ,player2.first_name)
-        print(f'press 1 {player1.first_name} won the match ')
-        print(f'press 2 {player2.first_name} won the match ')
-        print('press 3 for draw')
-        ask_result = int(input(""))
+        while True:
+            # Prompt the user for the match result
+            print("")
+            print(player1.first_name,"///VS///" ,player2.first_name)
+            print(f'press 1 {player1.first_name} won the match ')
+            print(f'press 2 {player2.first_name} won the match ')
+            print('press 3 for draw')
+            ask_result = int(input("Choose match winner :"))
+            if ask_result == 1 or ask_result == 2 :
+                break
+            elif ask_result != 3:
+                print("please enter a valid option:")
+            elif ask_result == 3:
+                print("match is draw, the players are playing again.")
+        
         return ask_result
 
-# details = View.register_player({
-#                     "country":"france",
-#                     "club_name": "club_name",
-#                     "chess_id": "0",
-#                     "last_name": None,
-#                     "first_name": None,
-#                     "birthday":None
-#                     })
-
-# if "0" in details.values():
-#     print("system exited")
+    @staticmethod
+    def show_round_details(round):
+        print("---------------------------")
+        print("Round Name       :",round.rnd_name)
+        print("Round Start Date :",round.rnd_start_datetime)
+        print("Round End Date   :",round.rnd_end_datetime)
+        # print("")
+        

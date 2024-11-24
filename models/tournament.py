@@ -1,10 +1,11 @@
 import os
 import json
 import math
-from datetime import datetime
+from datetime import datetime, timedelta
 from models.player import Player
 from models.round import Round
 from models.match import Match
+from copy import deepcopy
 
 class Tournament:
     def __init__(self, name = None, location= None, start_date= None, end_date= None, description= None, number_of_rounds=4, dictionary = None):
@@ -29,7 +30,21 @@ class Tournament:
     def __str__(self):
         # Return a string representation of the tournament
         return f"Tournament '{self.name}' from {self.start_date} to {self.end_date}"
-
+    def get_reg_player_dict(self):
+        return [player.__dict__ for player in self.registered_players]
+    def get_rounds_dict(self):
+        rounds = []
+        for round in self.rounds:
+            print("get round print",round.__dict__)
+            round = round.__dict__
+            rnd_matches = []
+            for match in round["rnd_matches"]:
+                match =[match.player1.__dict__,match.player2.__dict__]
+                rnd_matches.append(match)
+            round["rnd_matches"] = rnd_matches    
+            rounds.append(round)    
+        return rounds
+    
     def save(self):
         # Save the tournament details to a JSON file
         data = {
@@ -40,8 +55,9 @@ class Tournament:
             "description": self.description,
             "number_of_rounds": self.number_of_rounds,
             "current_round": self.current_round,
-            "rounds": [self._round_to_dict(rnd) for rnd in self.rounds],
-            "registered_players": [self._player_to_dict(p) for p in self.registered_players],
+            "rounds":self.get_rounds_dict(),
+                # [self._round_to_dict(rnd) for rnd in self.rounds]
+            "registered_players": self.get_reg_player_dict()
         }
         os.makedirs('resources/tournaments', exist_ok=True)
         with open(f"resources/tournaments/{self.name}.json", "w") as file:
@@ -86,7 +102,8 @@ class Tournament:
     def register_player(self,details):
         new_player = Player(dictionary = details)
         self.registered_players.append(new_player)
-        self.add_player_to_file(new_player)
+        # self.add_player_to_file(new_player)
+        self.save()
 
     def verify_player(self, chess_id, country, club_name):
         with open("resources/clubs.json", "r") as file:
@@ -120,28 +137,72 @@ class Tournament:
         with open(f"resources/tournaments/{self.name}.json", "w") as file:
             json.dump(tournament, file, indent=4)
             print("New player saved succesfully !")
+            
+    def set_total_nbr_rounds(self):
+        number_of_players = len(self.registered_players)
+        self.number_of_rounds = int(math.log2(number_of_players))
+        # print("number of rounds check:",self.number_of_rounds)
+        self.end_date = (datetime.now()+timedelta(days = self.number_of_rounds)).strftime("%Y-%m-%d %H:%M:%S")
+        self.save()
+        
+    def add_rounds_to_file(self):
+        with open(f"resources/tournaments/{self.name}.json", "r") as file:
+            tournament = json.load(file)
+        # for round in self.rounds:
+        round = self.rounds[self.current_round -1]
+        tournament_round = {
+            "rnd_name": round.rnd_name,
+            "rnd_start_datetime": round.rnd_start_datetime,
+            "rnd_end_datetime": round.rnd_end_datetime,
+        }
+        tournament_round_matches = []
+        # print(len(round.rnd_matches))
+        for match in round.rnd_matches:
+            round_match = [
+                {
+                    "last_name": match.player1.last_name,
+                    "first_name": match.player1.first_name,
+                    "date_of_birth": match.player1.date_of_birth,
+                    "national_chess_id": match.player1.national_chess_id,
+                    "plyr_score": match.player1.plyr_score,
+                    "has_lost": match.player1.has_lost,
+                },
+                {
+                    "last_name": match.player2.last_name,
+                    "first_name": match.player2.first_name,
+                    "date_of_birth": match.player2.date_of_birth,
+                    "national_chess_id": match.player2.national_chess_id,
+                    "plyr_score": match.player2.plyr_score,
+                    "has_lost": match.player2.has_lost,
+                },
+            ]
+            tournament_round_matches.append(round_match)
+        tournament_round["rnd_matches"] = tournament_round_matches
+        tournament["rounds"].append(tournament_round)
+        with open(f"resources/tournaments/{self.name}.json", "w") as file:
+            json.dump(tournament, file, indent=4)    
     def generate_round(self):
         # Generate matches for the next round
         self.current_round += 1
         if self.current_round == 1:
-            self.current_players = self.registered_players.copy()
+            self.current_players = deepcopy(self.registered_players)
+            print("I am here")
         round_name = f"Round {self.current_round}"
         start_date_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        current_round = Round(round_name, start_date_time)
+        end_date_time = (datetime.now()+timedelta(days = 1)).strftime("%Y-%m-%d %H:%M:%S")
+        current_round = Round(round_name, start_date_time, end_date_time)
         current_round.set_matches(self.current_players, self.current_round)
         self.rounds.append(current_round)
 
     def start_round(self):
-        # Start the current round and update the tournament stats
-        current_round = self.rounds[-1]
-        # Play each match in the round
-        for match in current_round.rnd_matches:
-            match.play()
-        # Update current players based on match results
-        self.current_players = current_round.check_round_winners()
-        # Set the end time for the round
-        current_round.rnd_end_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        # self.rounds[self.current_round_number - 1].start_matches()
+        
+        # self.rounds[
+        #     self.current_round - 1
+        # ].rnd_end_datetime = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+        self.current_players = self.rounds[self.current_round - 1].check_round_winners()
         self.save()
+        return len(self.current_players), self.current_players
 
     def reset_rounds(self):
         # Reset the rounds of the tournament

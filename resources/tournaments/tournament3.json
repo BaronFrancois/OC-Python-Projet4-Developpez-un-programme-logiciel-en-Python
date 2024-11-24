@@ -2,142 +2,55 @@
     "name": "tournament3",
     "location": "paris",
     "start_date": "28/09/2024",
-    "end_date": "28/09/2024",
-    "number_of_rounds": 4,
+    "end_date": "2024-11-23 14:37:52",
+    "description": "Test for adding input scores",
+    "number_of_rounds": 2,
     "current_round": 0,
-    "rounds": [
-        {
-            "rnd_name": "Round 1",
-            "rnd_start_datetime": "10/12/2024, 14:33:41",
-            "rnd_end_datetime": "10/12/2024, 14:33:43",
-            "rnd_matches": [
-                [
-                    {
-                        "last_name": "Doe",
-                        "first_name": "John",
-                        "date_of_birth": "1990-05-14",
-                        "national_chess_id": "EN12345",
-                        "plyr_score": 1,
-                        "has_lost": false,
-                        "federation": "European Chess Federation",
-                        "country": "Europe",
-                        "club_name": "London Chess Club"
-                    },
-                    {
-                        "last_name": "Dupont",
-                        "first_name": "Pierre",
-                        "date_of_birth": "1985-03-08",
-                        "national_chess_id": "FR12345",
-                        "plyr_score": 0,
-                        "has_lost": true,
-                        "federation": "European Chess Federation",
-                        "country": "Europe",
-                        "club_name": "Paris Chess Club"
-                    }
-                ],
-                [
-                    {
-                        "last_name": "Smith",
-                        "first_name": "Jane",
-                        "date_of_birth": "1988-11-20",
-                        "national_chess_id": "EN67890",
-                        "plyr_score": 1,
-                        "has_lost": false,
-                        "federation": "European Chess Federation",
-                        "country": "Europe",
-                        "club_name": "London Chess Club"
-                    },
-                    {
-                        "last_name": "Yamada",
-                        "first_name": "Taro",
-                        "date_of_birth": "1992-07-10",
-                        "national_chess_id": "JP12345",
-                        "plyr_score": 0,
-                        "has_lost": true,
-                        "federation": "Asian Chess Federation",
-                        "country": "Asia",
-                        "club_name": "Tokyo Chess Club"
-                    }
-                ]
-            ]
-        },
-        {
-            "rnd_name": "Round 2",
-            "rnd_start_datetime": "10/12/2024, 14:33:43",
-            "rnd_end_datetime": "10/12/2024, 14:33:45",
-            "rnd_matches": [
-                [
-                    {
-                        "last_name": "Doe",
-                        "first_name": "John",
-                        "date_of_birth": "1990-05-14",
-                        "national_chess_id": "EN12345",
-                        "plyr_score": 1,
-                        "has_lost": false,
-                        "federation": "European Chess Federation",
-                        "country": "Europe",
-                        "club_name": "London Chess Club"
-                    },
-                    {
-                        "last_name": "Smith",
-                        "first_name": "Jane",
-                        "date_of_birth": "1988-11-20",
-                        "national_chess_id": "EN67890",
-                        "plyr_score": 1,
-                        "has_lost": false,
-                        "federation": "European Chess Federation",
-                        "country": "Europe",
-                        "club_name": "London Chess Club"
-                    }
-                ]
-            ]
-        }
-    ],
+    "rounds": [],
     "registered_players": [
         {
             "last_name": "Doe",
-                        "first_name": "John",
-                        "date_of_birth": "1990-05-14",
-                        "national_chess_id": "EN12345",
-                        "plyr_score": 1,
-                        "has_lost": false,
-                        "federation": "European Chess Federation",
-                        "country": "Europe",
-                        "club_name": "London Chess Club"
+            "first_name": "John",
+            "date_of_birth": "1990-05-14",
+            "national_chess_id": "EN12345",
+            "federation": null,
+            "country": null,
+            "club_name": null,
+            "plyr_score": 0,
+            "has_lost": false
         },
         {
             "last_name": "Smith",
-                        "first_name": "Jane",
-                        "date_of_birth": "1988-11-20",
-                        "national_chess_id": "EN67890",
-                        "plyr_score": 1,
-                        "has_lost": false,
-                        "federation": "European Chess Federation",
-                        "country": "Europe",
-                        "club_name": "London Chess Club"
+            "first_name": "Jane",
+            "date_of_birth": "1988-11-20",
+            "national_chess_id": "EN67890",
+            "federation": null,
+            "country": null,
+            "club_name": null,
+            "plyr_score": 0,
+            "has_lost": false
         },
         {
             "last_name": "Dupont",
-                        "first_name": "Pierre",
-                        "date_of_birth": "1985-03-08",
-                        "national_chess_id": "FR12345",
-                        "plyr_score": 0,
-                        "has_lost": true,
-                        "federation": "European Chess Federation",
-                        "country": "Europe",
-                        "club_name": "Paris Chess Club"
+            "first_name": "Pierre",
+            "date_of_birth": "1985-03-08",
+            "national_chess_id": "FR12345",
+            "federation": null,
+            "country": null,
+            "club_name": null,
+            "plyr_score": 0,
+            "has_lost": false
         },
         {
             "last_name": "Yamada",
-                        "first_name": "Taro",
-                        "date_of_birth": "1992-07-10",
-                        "national_chess_id": "JP12345",
-                        "plyr_score": 0,
-                        "has_lost": true,
-                        "federation": "Asian Chess Federation",
-                        "country": "Asia",
-                        "club_name": "Tokyo Chess Club"
+            "first_name": "Taro",
+            "date_of_birth": "1992-07-10",
+            "national_chess_id": "JP12345",
+            "federation": null,
+            "country": null,
+            "club_name": null,
+            "plyr_score": 0,
+            "has_lost": false
         }
-    ],
-    "description": "Test for adding input scores"
+    ]
 }

@@ -48,7 +48,8 @@ class Round:
     
     def check_round_winners(self):
         players = []
-        for match in self.rnd_matches:
+        for i, match in enumerate(self.rnd_matches):
+            # print("match number : ", i)
             if not match.player1.has_lost:
                 players.append(match.player1)
             if not match.player2.has_lost:

@@ -4,15 +4,15 @@ from controllers.tournament_controller import TournamentController
 
 def show_menu():
     print("-----------------------------------------")
-    print("press 1 to create tournament::")
-    print("press 2 to see the list of all players:")
-    print("press 3 to see the list of all tournaments:")
-    print("press 4 to register player:")
-    print("press 5 to start the tournament:")
-    print("press 6 search for particular tournament :")
+    print("press 1 to create tournament :")
+    print("press 2 to see the list of all players :")
+    print("press 3 to see the list of all tournaments :")
+    print("press 4 to register player :")
+    print("press 5 to start the tournament :")
+    print("press 6 show particular tournament details :")
     print("press 7 to see the list of all players in particular tournament :")
     print("press 8 to see all rounds and matches in tournament :")
-    print("press 9 to exit:")
+    print("press 9 to exit :")
 
 def resume_app():
     if os.path.exists("resources/resume_file.json"):
@@ -35,7 +35,7 @@ def main():
                 3:'show_all_tournaments',
                 4:'register_player',
                 5:'start_tournament',
-                6:'search_tournament',
+                6:'show_particular_tournament',
                 7:'show_tournament_players',
                 8:'show_tournament_report'
             }

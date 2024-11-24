@@ -71,4 +71,10 @@ done 1,2,4,7
 ----------------------------------------------------------------------------------
 15/11/2024
 Check for the tournaments report save
-
+----------------------------------------------------------------------------------
+18/11/2024
+Chech for option number 8 and then 5
+----------------------------------------------------------------------------------
+make functions more flexible, changing the 
+----------------------------------------------------------------------------------
+add player into tournament 9, start tournament (see tournament details printing, if it is it's ok otherwise check)
