@@ -5,11 +5,15 @@ from models.player import Player
 class Club:
     def __init__(self):
         self.players = []
+        # call load method to load player from json : when a club is created the data is automaticly loaded
         self.load()
+    
         
     def load(self):
         with open("resources/clubs.json", "r") as file:
+            # file content is loaded in a form of a dictionnary 
             details = json.load(file)
+            # getting access to federation key from details dictionnary
             fed = details["federations"]
             for f in fed:
                 for club in f["clubs"]:
@@ -19,7 +23,8 @@ class Club:
                         player["club_name"] = club["club_name"]
                         player_object = Player(dictionary = player)
                         self.players.append(player_object)
-                
+    
+    # checking if the player data correspond to the details from clubs.json 
     def check_valid_player (self, details = {}):
         for player in self.players:
             if player.national_chess_id == details["national_chess_id"]:
