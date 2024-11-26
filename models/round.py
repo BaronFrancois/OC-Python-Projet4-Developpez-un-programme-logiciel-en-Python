@@ -52,7 +52,7 @@ class Round:
                 player2 = sorted_player[i + 1]
                 current_match = Match(player1, player2)
                 self.rnd_matches.append(current_match)
-    
+        # print("all matches look like", self.rnd_matches)
     def check_round_winners(self):
         # creating an empty list to stock players that didn't lost
         players = []

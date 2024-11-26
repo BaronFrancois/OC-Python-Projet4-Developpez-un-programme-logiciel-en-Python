@@ -67,11 +67,16 @@ class View:
             print(line)
             
     @staticmethod
-    def show_winner(winners):
+    def show_winner(winner):
+        print("")
         # convert if statement into view
         print("final winner decided") 
-        print("the tournament winner is", winners[0].first_name)
+        print("the tournament winner is", winner)
         
+    @staticmethod
+    def show_not_final_winner():   
+         print()
+         print("no final winner yet")
     @staticmethod
     def show_all_tournaments(tournament):
         

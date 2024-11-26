@@ -78,3 +78,13 @@ Chech for option number 8 and then 5
 make functions more flexible, changing the 
 ----------------------------------------------------------------------------------
 add player into tournament 9, start tournament (see tournament details printing, if it is it's ok otherwise check)
+----------------------------------------------------------------------------------
+26/11/2024
+try to work on option 8. Sequence to follow, report generated first, show the report, then ask for save
+----------------------------------------------------------------------------------
+28/11/2024
+flattern the rounds, check if it is a list of dictionnaries instead of list of objects.
+Use the key instead of attributes.
+-check into tourControler and tournament.py and tournamentView, remove unused functions
+-search the functions name into global file, if it's not used anywhere remove it
+----------------------------------------------------------------------------------

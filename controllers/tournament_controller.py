@@ -98,19 +98,16 @@ class TournamentController:
             View.show_round_details(self.tournament.rounds[round])
             for match in self.tournament.rounds[round].rnd_matches:
                     # Prompt the user for the match result
-                ask_result = View.ask_match_result(match.player1,match.player2)
-                # print("before",[player.__dict__ for player in self.tournament.registered_players])        
-                # Update the match based on the result        
+                ask_result = View.ask_match_result(match.player1,match.player2)     
                 match.play(ask_result)
-                # print("after",[player.__dict__ for player in self.tournament.registered_players])
-                # print(match.player1.first_name,match.player1.plyr_score, "//" ,match.player2.first_name,match.player2.plyr_score)
             number_of_winners, winners = self.tournament.start_round()
-            # self.tournament.add_rounds_to_file()
             if number_of_winners == 1:
-                View.show_winner(winners)
+                View.show_winner(winners[0].first_name)
                 break
-            print("no final winner yet")
-        return True
+            else:
+                View.show_not_final_winner()
+        return ResultType.SUCCES
+    
     def find_longest(self,object_list,attribute =None):
         def get_attribute_len(obj):
             value = getattr(obj,attribute)
@@ -120,6 +117,7 @@ class TournamentController:
         value = getattr(longest_object,attribute)
         longest_str = max(len(value),len(attribute))
         return longest_str
+    
     def add_report_headings(self,headers):
         report = []
         row = "" 
@@ -133,7 +131,8 @@ class TournamentController:
             row += f" | {"_"*spacing}"
         row += " |"
         report.append(row)
-        return report  
+        return report 
+     
     def sort_players(self,players,attribute):
         def get_attribute(player):
             value = getattr(player,attribute)
@@ -160,7 +159,7 @@ class TournamentController:
     def prepare_report(self,headers,obj_list,file_name):   
         for header in headers:
             headers[header] = self.find_longest(obj_list,attribute = header)
-        # print(headers)
+        print(headers)
         
         report = self.add_report_headings(headers)
         # print(report)
@@ -215,28 +214,42 @@ class TournamentController:
         
     # Display all rounds and matches in the tournament.
     def show_tournament_report(self, details = None, option_number = None):
-        longest_first_name = longest_last_name = 0
-        for round in self.tournament.rounds:
-            View.show_tournament_round(
-                round.rnd_name, round.rnd_start_datetime, round.rnd_end_datetime
-            )
-            for match in round.rnd_matches:
-                View.show_round_matches(match.player1, match.player2)
-                # Update the maximum lengths for formatting
-                longest_first_name = max(longest_first_name,len(match.player1.first_name),len(match.player2.last_name))
-                longest_last_name = max(longest_last_name,len(match.player1.last_name),len(match.player2.last_name))
+        headers = {"rnd_name" : None,
+                    "rnd_start_datetime" : None,
+                    "rnd_end_datetime" : None,
+                    # "rnd_matches" : None
+                    }
+        
+        file_name = f"rounds_&_matches_{self.tournament.name}_report"
+        self.prepare_report(headers,self.tournament.rounds,file_name)
+        # for round in self.tournament.rounds:
+        #     for match in round.rnd_matches:
+        #         self.prepare_report()
                 
-        ask_report = View.ask_for_report()
-        if ask_report:
-            # Generate a report
-            report = []
-            report.append(f'| Round n | {"Round SD":<{20}} | {"Round ED":<{20}} | P1 Chess Id | {"P1 LN":<{longest_last_name}} | {"P1 FN":{longest_first_name}} | {"P1 Score":<{7}} | P2 Chess Id | {"P2 LN":<{longest_last_name}} | {"P2 FN":{longest_first_name}} | {"P2 Score":<{8}} | \n')
-            report.append(f'| {"_"*(7)} | {"_"*(20)} | {"_"*(20)} | {"_"*(11)} | {"_"*(longest_last_name)} | {"_"*(longest_first_name)} | {"_"*(8)} | {"_"*(11)} | {"_"*(longest_last_name)} | {"_"*(longest_first_name)} | {"_"*(8)} | \n')
-            for round in self.tournament.rounds :
-                for match in round.rnd_matches :
-                    report.append(f'| {round.rnd_name:<{7}} | {round.rnd_start_datetime:<{20}} | {round.rnd_end_datetime:<{20}} | {match.player1.national_chess_id:<{11}} | {match.player1.last_name:<{longest_last_name}} | {match.player1.first_name:{longest_first_name}} | {match.player1.plyr_score:<{8}} | {match.player2.national_chess_id :<{11}} | {match.player2.last_name:<{longest_last_name}} | {match.player2.first_name:{longest_first_name}} | {match.player2.plyr_score:<{8}} | \n')
-            # Write the report to a file
-            with open(f"resources/reports/rounds_&_matches_{self.tournament.name}_report.txt","w") as file:
-                file.writelines(report) 
-                print(f"{self.tournament.name}'s rounds and matches report has been generated")
-        return True
+        
+        
+        # longest_first_name = longest_last_name = 0
+        # for round in self.tournament.rounds:
+        #     View.show_tournament_round(
+        #         round.rnd_name, round.rnd_start_datetime, round.rnd_end_datetime
+        #     )
+        #     for match in round.rnd_matches:
+        #         View.show_round_matches(match.player1, match.player2)
+        #         # Update the maximum lengths for formatting
+        #         longest_first_name = max(longest_first_name,len(match.player1.first_name),len(match.player2.last_name))
+        #         longest_last_name = max(longest_last_name,len(match.player1.last_name),len(match.player2.last_name))
+                
+        # ask_report = View.ask_for_report()
+        # if ask_report:
+        #     # Generate a report
+        #     report = []
+        #     report.append(f'| Round n | {"Round SD":<{20}} | {"Round ED":<{20}} | P1 Chess Id | {"P1 LN":<{longest_last_name}} | {"P1 FN":{longest_first_name}} | {"P1 Score":<{7}} | P2 Chess Id | {"P2 LN":<{longest_last_name}} | {"P2 FN":{longest_first_name}} | {"P2 Score":<{8}} | \n')
+        #     report.append(f'| {"_"*(7)} | {"_"*(20)} | {"_"*(20)} | {"_"*(11)} | {"_"*(longest_last_name)} | {"_"*(longest_first_name)} | {"_"*(8)} | {"_"*(11)} | {"_"*(longest_last_name)} | {"_"*(longest_first_name)} | {"_"*(8)} | \n')
+        #     for round in self.tournament.rounds :
+        #         for match in round.rnd_matches :
+        #             report.append(f'| {round.rnd_name:<{7}} | {round.rnd_start_datetime:<{20}} | {round.rnd_end_datetime:<{20}} | {match.player1.national_chess_id:<{11}} | {match.player1.last_name:<{longest_last_name}} | {match.player1.first_name:{longest_first_name}} | {match.player1.plyr_score:<{8}} | {match.player2.national_chess_id :<{11}} | {match.player2.last_name:<{longest_last_name}} | {match.player2.first_name:{longest_first_name}} | {match.player2.plyr_score:<{8}} | \n')
+        #     # Write the report to a file
+        #     with open(f"resources/reports/rounds_&_matches_{self.tournament.name}_report.txt","w") as file:
+        #         file.writelines(report) 
+        #         print(f"{self.tournament.name}'s rounds and matches report has been generated")
+        # return True

@@ -34,11 +34,11 @@ class Tournament:
         return [player.__dict__ for player in self.registered_players]
     def get_rounds_dict(self):
         rounds = []
-        for round in self.rounds:
-            print("get round print",round.__dict__)
+        for round in deepcopy(self.rounds):
             round = round.__dict__
             rnd_matches = []
             for match in round["rnd_matches"]:
+                # print("check for match",match)
                 match =[match.player1.__dict__,match.player2.__dict__]
                 rnd_matches.append(match)
             round["rnd_matches"] = rnd_matches    
