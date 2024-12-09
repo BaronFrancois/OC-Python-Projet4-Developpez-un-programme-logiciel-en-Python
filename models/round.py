@@ -69,6 +69,3 @@ class Round:
         # for player in players:
         #     print(player.first_name)
         return players
-    # def start_matches(self):
-    #     for match in self.rnd_matches:
-    #         match.play()       

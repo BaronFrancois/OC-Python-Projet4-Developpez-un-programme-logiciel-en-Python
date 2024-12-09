@@ -1,6 +1,7 @@
 import os
 import json
-from controllers.tournament_controller import TournamentController
+from controllers.main_controller import MainController
+from utils.error_util import ResultType
 
 def show_menu():
     print("-----------------------------------------")
@@ -41,7 +42,7 @@ def main():
             }
 
     while True:
-        tournament_manager = TournamentController()
+        main_controller = MainController()
         if details :
             user_input = details["option_number"]
         else:
@@ -56,15 +57,15 @@ def main():
                 tournament_name = details["tournament"]
             else:
                 tournament_name = input("enter the tournament name:")
-            is_loaded = tournament_manager.load(tournament_name)
+            is_loaded = main_controller.load(tournament_name)
             if not is_loaded:
                 print("no such tournament exists")
                 continue
 
         if user_input in range(1,9):
-            func = getattr(tournament_manager,options[user_input])
-            succes = func(details, user_input)
-            if not succes:
+            func = getattr(main_controller,options[user_input])
+            result = func(details, user_input)
+            if result != ResultType.SUCCES:
                 break
             # fix 
         else :

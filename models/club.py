@@ -8,7 +8,6 @@ class Club:
         # call load method to load player from json : when a club is created the data is automaticly loaded
         self.load()
     
-        
     def load(self):
         with open("resources/clubs.json", "r") as file:
             # file content is loaded in a form of a dictionnary 
@@ -48,19 +47,4 @@ class Club:
                         return ErrorType.PLAYER_LAST_NAME_MISMATCH
                 else:
                     return ErrorType.PLAYER_FIRST_NAME_MISMATCH
-        return ErrorType.PLAYER_ID_MISMATCH    
-    
-# club_details = Club()
-# print(club_details.player_ids)
-# details = {
-#                     "country":"Europe",
-#                     "club_name": "London Chess Club",
-#                     "chess_id": "EN12245",
-#                     "last_name": "Doe",
-#                     "first_name": "Jon",
-#                     "birthday":"1990-05-14"
-#                     }
-# print(club_details.check_valid_player(details))
-# print(club_details.federations)
-# print(club_details.countries)
-# print(club_details.clubs)
+        return ErrorType.PLAYER_ID_MISMATCH

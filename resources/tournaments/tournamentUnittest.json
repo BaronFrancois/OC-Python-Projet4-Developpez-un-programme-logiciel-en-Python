@@ -1,0 +1,23 @@
+{
+    "name": "tournamentUnittest",
+    "location": "Paris",
+    "start_date": "2024-12-05 00:00:00",
+    "end_date": "2024-12-12 00:00:00",
+    "description": "description",
+    "number_of_rounds": 4,
+    "current_round": 0,
+    "rounds": [],
+    "registered_players": [
+        {
+            "last_name": "Doe",
+            "first_name": "John",
+            "date_of_birth": "1990-05-14",
+            "national_chess_id": "EN12345",
+            "federation": "European Chess Federation",
+            "country": "Europe",
+            "club_name": "London Chess Club",
+            "plyr_score": 0,
+            "has_lost": false
+        }
+    ]
+}

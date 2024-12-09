@@ -22,27 +22,50 @@ class Tournament:
         self.current_players = []
         if dictionary :
             self.__set_attributes(dictionary)
+            
     def __set_attributes (self, dictionary):
         for key, value in dictionary.items():
             setattr(self, key, value)
-            # print(key, value)
-   
-    def __str__(self):
-        # Return a string representation of the tournament
-        return f"Tournament '{self.name}' from {self.start_date} to {self.end_date}"
+
     def get_reg_player_dict(self):
         return [player.__dict__ for player in self.registered_players]
+    
     def get_rounds_dict(self):
         rounds = []
         for round in deepcopy(self.rounds):
             round = round.__dict__
             rnd_matches = []
             for match in round["rnd_matches"]:
-                # print("check for match",match)
                 match =[match.player1.__dict__,match.player2.__dict__]
                 rnd_matches.append(match)
             round["rnd_matches"] = rnd_matches    
             rounds.append(round)    
+        return rounds
+    
+    # check for the function to cut it into Round
+    def add_flat_player(self,round,player,player_number):
+        player.pop("federation")
+        player.pop("country")
+        player.pop("club_name")
+        player.pop("plyr_score")
+        player.pop("date_of_birth")
+        if player["has_lost"]:
+            player["has_lost"] = "yes"
+        else:
+            player["has_lost"] = "no"
+        for key,value in player.items():
+            round[f"{player_number}_{key}"] = value
+            
+    def get_flat_rounds_dict(self):
+        rounds = []
+        for round in deepcopy(self.rounds):
+            round = round.__dict__
+            for match in round["rnd_matches"]:
+                round_copy  = deepcopy(round)
+                round_copy.pop("rnd_matches")    
+                self.add_flat_player(round_copy,match.player1.__dict__,"p1")
+                self.add_flat_player(round_copy,match.player2.__dict__,"p2")
+                rounds.append(round_copy)  
         return rounds
     
     def save(self):
@@ -78,18 +101,12 @@ class Tournament:
                         player2 = match[1]
                         player1 = Player(dictionary = player1)
                         # the dictionary is going to be "player1" instead of None to run the __set_attributes into player.py to transform player inscription dictionary details into class object.
-
                         player2 = Player(dictionary = player2)
-
                         match = Match(player1, player2)
                         round_matches.append(match)
-
                     round["rnd_matches"] = round_matches
                     round = Round(dictionary = round)
                     self.rounds.append(round)
-                # print("details",details["registered_players"])
-                # print("len",len(details["registered_players"]))
-                # print("datatype",type(details["registered_players"][0]))
                 for player in details["registered_players"]:
                     # print("///")
                     # print(player)
@@ -105,88 +122,20 @@ class Tournament:
         # self.add_player_to_file(new_player)
         self.save()
 
-    def verify_player(self, chess_id, country, club_name):
-        with open("resources/clubs.json", "r") as file:
-            details = json.load(file)
-            fed = details["federations"]
-            for f in fed:
-                if f["country"] == country:
-                    clubs = f["clubs"]
-                    for club in clubs:
-                        if club["club_name"] == club_name:
-                            players = club["players"]
-                            for player in players:
-                                if player["national_chess_id"] == chess_id:
-                                    return True
-        return False
-
-    def add_player_to_file(self, new_player):
-        # player = {
-        #     "national_chess_id": new_player.national_chess_id,
-        #     "last_name": new_player.last_name,
-        #     "first_name": new_player.first_name,
-        #     "date_of_birth": new_player.date_of_birth,
-        #         }
-        player = new_player.__dict__
-        
-
-        with open(f"resources/tournaments/{self.name}.json", "r") as file:
-            tournament = json.load(file)
-            # print(tournament)
-        tournament["registered_players"].append(player)
-        with open(f"resources/tournaments/{self.name}.json", "w") as file:
-            json.dump(tournament, file, indent=4)
-            print("New player saved succesfully !")
-            
     def set_total_nbr_rounds(self):
         number_of_players = len(self.registered_players)
         self.number_of_rounds = int(math.log2(number_of_players))
-        # print("number of rounds check:",self.number_of_rounds)
         self.end_date = (datetime.now()+timedelta(days = self.number_of_rounds)).strftime("%Y-%m-%d %H:%M:%S")
         self.save()
-        
-    def add_rounds_to_file(self):
-        with open(f"resources/tournaments/{self.name}.json", "r") as file:
-            tournament = json.load(file)
-        # for round in self.rounds:
-        round = self.rounds[self.current_round -1]
-        tournament_round = {
-            "rnd_name": round.rnd_name,
-            "rnd_start_datetime": round.rnd_start_datetime,
-            "rnd_end_datetime": round.rnd_end_datetime,
-        }
-        tournament_round_matches = []
-        # print(len(round.rnd_matches))
-        for match in round.rnd_matches:
-            round_match = [
-                {
-                    "last_name": match.player1.last_name,
-                    "first_name": match.player1.first_name,
-                    "date_of_birth": match.player1.date_of_birth,
-                    "national_chess_id": match.player1.national_chess_id,
-                    "plyr_score": match.player1.plyr_score,
-                    "has_lost": match.player1.has_lost,
-                },
-                {
-                    "last_name": match.player2.last_name,
-                    "first_name": match.player2.first_name,
-                    "date_of_birth": match.player2.date_of_birth,
-                    "national_chess_id": match.player2.national_chess_id,
-                    "plyr_score": match.player2.plyr_score,
-                    "has_lost": match.player2.has_lost,
-                },
-            ]
-            tournament_round_matches.append(round_match)
-        tournament_round["rnd_matches"] = tournament_round_matches
-        tournament["rounds"].append(tournament_round)
-        with open(f"resources/tournaments/{self.name}.json", "w") as file:
-            json.dump(tournament, file, indent=4)    
+            
     def generate_round(self):
         # Generate matches for the next round
         self.current_round += 1
         if self.current_round == 1:
             self.current_players = deepcopy(self.registered_players)
-            print("I am here")
+            # print("I am here")
+        else :
+            self.current_players = deepcopy(self.current_players)
         round_name = f"Round {self.current_round}"
         start_date_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         end_date_time = (datetime.now()+timedelta(days = 1)).strftime("%Y-%m-%d %H:%M:%S")
@@ -195,75 +144,15 @@ class Tournament:
         self.rounds.append(current_round)
 
     def start_round(self):
-        # self.rounds[self.current_round_number - 1].start_matches()
-        
-        # self.rounds[
-        #     self.current_round - 1
-        # ].rnd_end_datetime = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         self.current_players = self.rounds[self.current_round - 1].check_round_winners()
         self.save()
         return len(self.current_players), self.current_players
 
     def reset_rounds(self):
-        # Reset the rounds of the tournament
         self.rounds = []
         self.current_round = 0
         self.save()
 
-    def _player_to_dict(self, player):
-        # Convert a Player object to a dictionary for serialization
-        return {
-            "last_name": player.last_name,
-            "first_name": player.first_name,
-            "date_of_birth": player.date_of_birth,
-            "national_chess_id": player.national_chess_id,
-            "plyr_score": player.plyr_score,
-            "has_lost": player.has_lost,
-        }
-
-    def _dict_to_player(self, data):
-        # Create a Player object from a dictionary
-        return Player(
-            data["last_name"],
-            data["first_name"],
-            data["date_of_birth"],
-            data["national_chess_id"],
-            data.get("plyr_score", 0),
-            data.get("has_lost", False),
-        )
-
-    def _round_to_dict(self, rnd):
-        # Convert a Round object to a dictionary for serialization
-        return {
-            "rnd_name": rnd.rnd_name,
-            "rnd_start_datetime": rnd.rnd_start_datetime,
-            "rnd_end_datetime": rnd.rnd_end_datetime,
-            "rnd_matches": [self._match_to_dict(m) for m in rnd.rnd_matches],
-        }
-
-    def _dict_to_round(self, data):
-        # Create a Round object from a dictionary
-        rnd = Round(
-            data["rnd_name"],
-            data["rnd_start_datetime"],
-            data["rnd_end_datetime"],
-        )
-        rnd.rnd_matches = [self._dict_to_match(m) for m in data["rnd_matches"]]
-        return rnd
-
-    def _match_to_dict(self, match):
-        # Convert a Match object to a dictionary for serialization.
-        return {
-            "player1": self._player_to_dict(match.player1),
-            "player2": self._player_to_dict(match.player2),
-        }
-
-    def _dict_to_match(self, data):
-        # Create a Match object from a dictionary
-        player1 = self._dict_to_player(data["player1"])
-        player2 = self._dict_to_player(data["player2"])
-        return Match(player1, player2)
-    
     def get_reg_player_ids(self):
         ids = []
         for player in self.registered_players:

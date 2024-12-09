@@ -2,33 +2,33 @@
     "name": "tournament9",
     "location": "paris",
     "start_date": "21/11/2024",
-    "end_date": "2024-11-28 14:39:12",
+    "end_date": "2024-12-02 14:06:11",
     "description": "description",
     "number_of_rounds": 2,
     "current_round": 2,
     "rounds": [
         {
             "rnd_name": "Round 1",
-            "rnd_start_datetime": "2024-11-26 14:39:12",
-            "rnd_end_datetime": "2024-11-27 14:39:12",
+            "rnd_start_datetime": "2024-11-30 14:06:11",
+            "rnd_end_datetime": "2024-12-01 14:06:11",
             "rnd_matches": [
                 [
-                    {
-                        "last_name": "Smith",
-                        "first_name": "Jane",
-                        "date_of_birth": "1988-11-20",
-                        "national_chess_id": "EN67890",
-                        "federation": "European Chess Federation",
-                        "country": "Europe",
-                        "club_name": "London Chess Club",
-                        "plyr_score": 2,
-                        "has_lost": false
-                    },
                     {
                         "last_name": "Doe",
                         "first_name": "John",
                         "date_of_birth": "1990-05-14",
                         "national_chess_id": "EN12345",
+                        "federation": "European Chess Federation",
+                        "country": "Europe",
+                        "club_name": "London Chess Club",
+                        "plyr_score": 1,
+                        "has_lost": false
+                    },
+                    {
+                        "last_name": "Smith",
+                        "first_name": "Jane",
+                        "date_of_birth": "1988-11-20",
+                        "national_chess_id": "EN67890",
                         "federation": "European Chess Federation",
                         "country": "Europe",
                         "club_name": "London Chess Club",
@@ -46,7 +46,7 @@
                         "country": "Asia",
                         "club_name": "Tokyo Chess Club",
                         "plyr_score": 1,
-                        "has_lost": true
+                        "has_lost": false
                     },
                     {
                         "last_name": "Dupont",
@@ -64,15 +64,15 @@
         },
         {
             "rnd_name": "Round 2",
-            "rnd_start_datetime": "2024-11-26 14:39:14",
-            "rnd_end_datetime": "2024-11-27 14:39:14",
+            "rnd_start_datetime": "2024-11-30 14:06:17",
+            "rnd_end_datetime": "2024-12-01 14:06:17",
             "rnd_matches": [
                 [
                     {
-                        "last_name": "Smith",
-                        "first_name": "Jane",
-                        "date_of_birth": "1988-11-20",
-                        "national_chess_id": "EN67890",
+                        "last_name": "Doe",
+                        "first_name": "John",
+                        "date_of_birth": "1990-05-14",
+                        "national_chess_id": "EN12345",
                         "federation": "European Chess Federation",
                         "country": "Europe",
                         "club_name": "London Chess Club",

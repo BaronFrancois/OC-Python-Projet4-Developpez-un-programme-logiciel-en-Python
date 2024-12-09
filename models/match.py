@@ -6,22 +6,6 @@ class Match:
         self.player1 = player1
         self.player2 = player2
     
-    # def play(self):
-    #     while True:
-    #         score1 = random.choice([0,0.5,1])
-    #         score2 = 1-score1 
-    #         if score1 == 0 or score2 == 0 :
-    #             self.player1.plyr_score += score1
-    #             self.player2.plyr_score += score2
-    #             if score1 == 0:
-    #                 self.player1.has_lost = True
-    #             elif score2 == 0:
-    #                 self.player2.has_lost = True
-    #             break
-    #         elif score1 == 0.5:
-    #             print("match is draw, player are playing again")
-    
-    # match result from the View input for result
     def play(self, ask_result):
         # Using player 1 has reference :
             # input== 1 player 1 wins, input == 2 player 2 wins
@@ -41,10 +25,3 @@ class Match:
                 self.player1.has_lost = True
             elif score2 == 0:
                 self.player2.has_lost = True
-            
-        # elif score1 == 0.5:
-        
-        
-            
-
-

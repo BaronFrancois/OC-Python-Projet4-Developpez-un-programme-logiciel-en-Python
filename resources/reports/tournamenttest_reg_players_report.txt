@@ -1,0 +1,4 @@
+ | National Chess Id | Last Name | First Name | Federation                | Club Name         |
+ | _________________ | _________ | __________ | _________________________ | _________________ |
+ | EN12345           | Doe       | John       | European Chess Federation | London Chess Club |
+ | EN67890           | Smith     | Jane       | European Chess Federation | London Chess Club |

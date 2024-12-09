@@ -1,6 +1,6 @@
 import os
 import json
-from controllers.tournament_controller import TournamentController
+from controllers.main_controller import TournamentController
 
 def show_menu():
     print("-----------------------------------------")

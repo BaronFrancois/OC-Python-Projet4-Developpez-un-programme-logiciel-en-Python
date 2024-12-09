@@ -88,3 +88,23 @@ Use the key instead of attributes.
 -check into tourControler and tournament.py and tournamentView, remove unused functions
 -search the functions name into global file, if it's not used anywhere remove it
 ----------------------------------------------------------------------------------
+WIP checking rounds = self.tournament.get_flat_rounds_dict()
+        for round in rounds:
+            print(round)
+----------------------------------------------------------------------------------
+round 1 it saves correctly and when when launch round 2 it updates the playr_score from round 1 too
+----------------------------------------------------------------------------------
+/!\ if tourament_end_date = null, all tournaments reports are not going to be generated.
+-> if this is the case we can set the same date
+----------------------------------------------------------------------------------
+02/12/2024
+& add_flat_players in tournament file
+&check tournament_view
+-> start updating testes
+----------------------------------------------------------------------------------
+04/12/2024
+check for different functions 
+----------------------------------------------------------------------------------
+09/12/2024
+do the register_player test = succes, error, paused
+----------------------------------------------------------------------------------

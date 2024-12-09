@@ -1,0 +1,3 @@
+ | Rnd Name | Rnd Start Datetime  | Rnd End Datetime    | P1 Last Name | P1 First Name | P1 National Chess Id | P1 Has Lost | P2 Last Name | P2 First Name | P2 National Chess Id | P2 Has Lost |
+ | ________ | ___________________ | ___________________ | ____________ | _____________ | ____________________ | ___________ | ____________ | _____________ | ____________________ | ___________ |
+ | Round 1  | 2024-12-04 17:41:51 | 2024-12-05 17:41:51 | Smith        | Jane          | EN67890              | no          | Doe          | John          | EN12345              | yes         |
