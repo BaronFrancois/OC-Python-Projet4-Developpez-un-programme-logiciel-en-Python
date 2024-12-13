@@ -71,12 +71,13 @@ class TestMainController(unittest.TestCase):
     # build error testes
     @patch('builtins.input',
     side_effect =['tournamentUnittest','Paris','05/12/2024','description',
-                "European Chess Federation","Europe","London Chess Club","EN12345","Doe","John","1990-05-14",
-                "European Chess Federation","Europe","London Chess Club","EN12345","Doe","John","1990-05-14",
-                "European Chess Federation","Europe","London Chess Club","EN12345","Doe","John","1990-05-14",
-                "European Chess Federation","Europe","London Chess Club","EN12345","Doe","John","1990-05-14",
-                "European Chess Federation","Europe","London Chess Club","EN12345","Doe","John","1990-05-14",
-                "European Chess Federation","Europe","London Chess Club","EN12345","Doe","John","1990-05-14",
+                "wrong Federation","Europe","London Chess Club","EN12345","Doe","John","1990-05-14",
+                "European Chess Federation","Europe","wrong Club","EN12345","Doe","John","1990-05-14",
+                "European Chess Federation","wrong country","London Chess Club","EN12345","Doe","John","1990-05-14",
+                "European Chess Federation","Europe","London Chess Club","EN12345","Doe","John","wrong bd",
+                "European Chess Federation","Europe","London Chess Club","EN12345","wrong LN","John","1990-05-14",
+                "European Chess Federation","Europe","London Chess Club","EN12345","Doe","wrong FN","1990-05-14",
+                "European Chess Federation","Europe","London Chess Club","ENenen1","Doe","John","1990-05-14",
                 ])
     def test_register_player_error(self, mock_input):
         if os.path.exists(r'resources\tournaments\tournamentUnittest.json'):
@@ -85,23 +86,79 @@ class TestMainController(unittest.TestCase):
             os.remove(r"resources/resume_file.json")
         self.main_controller.create_tournament(details = None, option_number = 1)
         self.main_controller.load('tournamentUnittest')
-        for i in range(4):
-            self.main_controller.register_player(details = None, option_number = 4)
+        for i in range(7):
+            result = self.main_controller.register_player(details = None, option_number = 4)
+            self.assertEqual(result, ResultType.ERROR)
     
-    def test_show_all_clubs_players(self):
-        pass
+    @patch("builtins.input",side_effect=['n','y'])    
+    def test_show_all_clubs_players(self, mock_input):
+        if os.path.exists(r"resources/resume_file.json"):
+            os.remove(r"resources/resume_file.json")
+        for i in range(2):
+            result = self.main_controller.show_all_clubs_players(details = None, option_number = 2)
+            self.assertEqual(result, ResultType.SUCCES)
+        self.assertTrue(os.path.exists(r"resources/reports/all_players_report.txt"))
 
-    def test_show_all_tournaments(self):
-        pass
+    @patch("builtins.input",side_effect=['n','y'])
+    def test_show_all_tournaments(self, mock_input):
+        if os.path.exists(r"resources/resume_file.json"):
+            os.remove(r"resources/resume_file.json")
+        for i in range(2):
+            result = self.main_controller.show_all_tournaments (details = None, option_number = 3)
+            self.assertEqual(result, ResultType.SUCCES)
+        self.assertTrue(os.path.exists(r"resources/reports/all_tournaments_report.txt"))
 
-    def test_show_particular_tournament(self):
-        pass
-
-    def test_show_tournament_players(self):
-        pass
-
-    def test_show_tournament_report(self):
-        pass
+    @patch("builtins.input",side_effect=['tournamentUnittest','Paris','05/12/2024','description','n','y'])
+    def test_show_particular_tournament(self,mock_input):
+        if os.path.exists(r'resources\tournaments\tournamentUnittest.json'):
+            os.remove(r'resources\tournaments\tournamentUnittest.json')
+        if os.path.exists(r"resources/resume_file.json"):
+            os.remove(r"resources/resume_file.json")
+        self.main_controller.create_tournament(details = None, option_number = 1)
+        self.main_controller.load('tournamentUnittest')
+        for i in range(2):
+            result = self.main_controller.show_particular_tournament(details = None, option_number = 6)
+            self.assertEqual(result, ResultType.SUCCES)
+        self.assertTrue(os.path.exists(r"resources/reports/tournamentUnittest_report.txt"))
+    
+    @patch("builtins.input",side_effect=['tournamentUnittest','Paris','05/12/2024','description',"European Chess Federation","Europe","London Chess Club","EN12345","Doe","John","1990-05-14",'n','y'])
+    def test_show_tournament_players(self,mock_input):
+        if os.path.exists(r'resources\tournaments\tournamentUnittest.json'):
+            os.remove(r'resources\tournaments\tournamentUnittest.json')
+        if os.path.exists(r"resources/resume_file.json"):
+            os.remove(r"resources/resume_file.json")
+        self.main_controller.create_tournament(details = None, option_number = 1)
+        self.main_controller.load('tournamentUnittest')
+        self.main_controller.register_player(details = None, option_number = 4)
+        for i in range(2):
+            result = self.main_controller.show_tournament_players(details = None, option_number = 7)
+            self.assertEqual(result, ResultType.SUCCES)
+        self.assertTrue(os.path.exists(r"resources/reports/tournamentUnittest_reg_players_report.txt"))
+        
+    
+    @patch("builtins.input",side_effect=['tournamentUnittest','Paris','05/12/2024','description',
+                    "European Chess Federation","Europe","London Chess Club","EN12345","Doe","John","1990-05-14",
+                    "European Chess Federation","Europe","London Chess Club","EN67890","Smith","Jane","1988-11-20",
+                    "European Chess Federation","Europe","Paris Chess Club","FR12345","Dupont","Pierre","1985-03-08",
+                    "Asian Chess Federation","Asia","Tokyo Chess Club","JP12345","Yamada","Taro","1992-07-10",
+                    random.choice([1,2]),random.choice([1,2]),random.choice([1,2]),'n','y'])
+    def test_show_tournament_report(self,mock_input):
+        if os.path.exists(r'resources\tournaments\tournamentUnittest.json'):
+            os.remove(r'resources\tournaments\tournamentUnittest.json')
+        if os.path.exists(r"resources/resume_file.json"):
+            os.remove(r"resources/resume_file.json")
+        self.main_controller.create_tournament(details = None, option_number = 1)
+        self.main_controller.load('tournamentUnittest')
+        for i in range(4):
+            result = self.main_controller.register_player(details = None, option_number = 4)
+            self.assertEqual(result, ResultType.SUCCES)
+        self.main_controller.start_tournament(details = None, option_number = 5)
+        for i in range (2):
+            result = self.main_controller.show_tournament_report(details=None, option_number=8)
+            self.assertEqual(result, ResultType.SUCCES)
+        self.assertTrue(os.path.exists(r"resources/reports/rounds_&_matches_tournamentUnittest_report.txt"))
+        
+        
 
 if __name__ == '__main__' :
     unittest.main()

@@ -108,3 +108,5 @@ check for different functions
 09/12/2024
 do the register_player test = succes, error, paused
 ----------------------------------------------------------------------------------
+14/12/2024
+wright Error testecases for the last 3 functions with a wrong tournament name.

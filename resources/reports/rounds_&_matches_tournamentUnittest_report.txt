@@ -1,0 +1,5 @@
+ | Rnd Name | Rnd Start Datetime  | Rnd End Datetime    | P1 Last Name | P1 First Name | P1 National Chess Id | P1 Has Lost | P2 Last Name | P2 First Name | P2 National Chess Id | P2 Has Lost |
+ | ________ | ___________________ | ___________________ | ____________ | _____________ | ____________________ | ___________ | ____________ | _____________ | ____________________ | ___________ |
+ | Round 1  | 2024-12-12 15:28:11 | 2024-12-13 15:28:11 | Doe          | John          | EN12345              | no          | Dupont       | Pierre        | FR12345              | yes         |
+ | Round 1  | 2024-12-12 15:28:11 | 2024-12-13 15:28:11 | Yamada       | Taro          | JP12345              | no          | Smith        | Jane          | EN67890              | yes         |
+ | Round 2  | 2024-12-12 15:28:11 | 2024-12-13 15:28:11 | Doe          | John          | EN12345              | yes         | Yamada       | Taro          | JP12345              | no          |
