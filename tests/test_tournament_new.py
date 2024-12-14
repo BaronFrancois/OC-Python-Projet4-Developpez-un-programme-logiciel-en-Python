@@ -157,8 +157,16 @@ class TestMainController(unittest.TestCase):
             result = self.main_controller.show_tournament_report(details=None, option_number=8)
             self.assertEqual(result, ResultType.SUCCES)
         self.assertTrue(os.path.exists(r"resources/reports/rounds_&_matches_tournamentUnittest_report.txt"))
+# ---------------------------------------------------------------------------------        
+    @patch("builtins.input", side_effect=['n','y'])
+    def test_show_particular_tournament_wrong_name(self, mock_input): 
+        if os.path.exists(r'resources\tournaments\tournamentUnittestWrong.json'):
+            os.remove(r'resources\tournaments\tournamentUnittestWrong.json')
+        if os.path.exists(r"resources/resume_file.json"):
+            os.remove(r"resources/resume_file.json")
+        result = self.main_controller.load('tournamentUnittestWrong')
+        self.assertNotEqual(result, ResultType.SUCCES)
         
-        
-
+    
 if __name__ == '__main__' :
     unittest.main()
